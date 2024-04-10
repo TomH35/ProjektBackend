@@ -20,7 +20,7 @@ export default {
   },
   setup() {
     const testFunc = async () => {
-      const response = await fetch('./laravel/public/api/testPost', {
+      const response = await fetch('./laravel/public/api/test-post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
