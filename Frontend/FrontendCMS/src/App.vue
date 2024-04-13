@@ -1,17 +1,8 @@
 <template>
-    <div id="app">
-      <HomeView />
-    </div>
+      <RouterView /> 
   </template>
   
   <script>
-  import HomeView from './views/HomeView.vue';
-  
-  export default {
-    name: 'App',
-    components: {
-      HomeView,
-    },
-  };
+import { RouterLink, RouterView } from 'vue-router';
   </script>
   
