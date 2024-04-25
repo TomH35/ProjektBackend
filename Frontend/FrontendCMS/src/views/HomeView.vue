@@ -33,7 +33,7 @@ export default {
       }
 
       const data = await response.json();
-      // Do something with the data
+
     };
 
     return {

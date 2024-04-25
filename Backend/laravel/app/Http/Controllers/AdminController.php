@@ -56,5 +56,9 @@ class AdminController extends Controller
             return Response::json(['error' => 'An error occurred while creating the stage'], 500);
         }
     }
-
+    public function showStages()
+    {
+        $stages = Stage::all();
+        return response()->json($stages);
+    }
 }

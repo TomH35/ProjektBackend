@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/test-post', [TestController::class, 'testPost']);
-Route::post('/stage', [AdminController::class, 'handleStage']);
+Route::post('/stageCreate', [AdminController::class, 'handleStage']);
+Route::get('/showStages', [AdminController::class, 'showStages']);
 
 
