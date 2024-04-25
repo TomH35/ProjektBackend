@@ -9,32 +9,59 @@
     </div>
   </template>
   
-  <script>
+<script>
 export default {
   data() {
     return {
       stages: [], 
+      events: [],
     };
   },
-  async created() {
+  created() {
+    this.fetchStagesAndEvents();
+    
+  },
+  methods: {
+
+    refreshStages() {
+      this.fetchStagesAndEvents();
+    },
+    
+    async fetchStagesAndEvents() {
+  try {
+    const response = await fetch('http://localhost/Backend/laravel/public/api/GetData'); 
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    this.stages = data.stages;
+    this.events = data.events;
+  } catch (error) {
+    console.error('There was a problem with the fetch operation: ', error);
+  }
+},
+
+    
+editStage(stage) {
+  const stageEvents = this.events.filter(event => event.stage_id === stage.id);
+  this.$emit('edit', { stage, events: stageEvents });
+},
+
+
+    async deleteStage(stage) {
     try {
-      const response = await fetch('http://localhost/Backend/laravel/public/api/showStages'); 
+      const response = await fetch(`http://localhost/Backend/laravel/public/api/DeleteStage/${stage.id}`, {
+        method: 'DELETE',
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      this.stages = await response.json();
+
+      this.stages = this.stages.filter(s => s.id !== stage.id);
     } catch (error) {
       console.error('There was a problem with the fetch operation: ', error);
-    }
-  },
-  methods: {
-    editStage(stage) {
-
-      this.$emit('edit', stage);
-    },
-    deleteStage(stage) {
-   
-    },
+    } 
+}
   },
 };
 </script>

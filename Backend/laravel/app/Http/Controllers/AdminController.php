@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
-    public function handleStage(Request $request)
+    public function createStage(Request $request)
     {
         $stageData = json_decode($request->get('stage'), true);
         $eventsData = $request->all()['events'];
@@ -56,9 +56,64 @@ class AdminController extends Controller
             return Response::json(['error' => 'An error occurred while creating the stage'], 500);
         }
     }
-    public function showStages()
+    public function GetData()
     {
         $stages = Stage::all();
-        return response()->json($stages);
+        $events = Event::all();
+        return response()->json(['stages' => $stages, 'events' => $events]);
     }
+
+
+    public function deleteStage($id)
+    {
+        $stage = Stage::findOrFail($id);
+        $stage->delete();
+
+        return response()->json(null, 204);
+    }
+
+    public function editStage($id, Request $request)
+    {
+        $stageData = json_decode($request->get('stage'), true);
+        $eventsData = $request->all()['events'];
+
+        // Find the existing stage
+        $stage = Stage::find($id);
+
+        if (!$stage) {
+            return Response::json(['error' => 'Stage not found'], 404);
+        }
+
+        // Update the stage data
+        $stage->update($stageData);
+
+        // Delete old events
+        $stage->events()->delete();
+
+        usort($eventsData, function ($a, $b) {
+            return $a['start_time'] <=> $b['start_time'];
+        });
+
+        for ($i = 0; $i < count($eventsData); $i++) {
+
+            if ($i > 0 && $eventsData[$i]['start_time'] <= $eventsData[$i - 1]['end_time']) {
+                return Response::json(['error' => 'Event times are overlapping'], 400);
+            }
+
+            if ($request->hasFile('events.' . $i . '.image')) {
+                $file = $request->file('events.' . $i . '.image');
+                $path = Storage::putFile('public/images', $file);
+                $url = Storage::url($path);
+                $eventsData[$i]['image_path'] = $url;
+            }
+
+            $eventsData[$i]['stage_id'] = $stage->id;
+
+            Event::create($eventsData[$i]);
+        }
+
+        return Response::json($stage);
+    }
+
+
 }

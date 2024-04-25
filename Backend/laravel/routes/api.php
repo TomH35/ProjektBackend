@@ -21,7 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/test-post', [TestController::class, 'testPost']);
-Route::post('/stageCreate', [AdminController::class, 'handleStage']);
-Route::get('/showStages', [AdminController::class, 'showStages']);
+Route::post('/stageCreate', [AdminController::class, 'createStage']);
+Route::get('/GetData', [AdminController::class, 'GetData']);
+Route::delete('/DeleteStage/{id}', [AdminController::class, 'deleteStage']);
+Route::post('/editStage/{id}', [AdminController::class, 'editStage']);
+
 
 

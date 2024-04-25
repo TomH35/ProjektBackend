@@ -199,6 +199,8 @@
         alert(this.successMessage);
 
         this.errorMessage = '';
+        this.$emit('stageCreated');
+        
       }
     } catch (error) {
 
