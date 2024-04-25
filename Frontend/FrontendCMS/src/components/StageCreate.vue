@@ -88,61 +88,71 @@
       };
     },
     methods: {
-
-        removeEvent(index) {
-      this.events.splice(index, 1);
-    },
-      addEvent() {
-        this.events.push({
-          name: '',
-          start_time: '',
-          end_time: '',
-          speaker: '',
-          link: '',
-          description: '',
-          image: null,
-        });
-      },
-      handleImageChange(index, event) {
-        this.events[index].image = event.target.files[0];
-      },
-      async createStage() {
+  removeEvent(index) {
+    this.events.splice(index, 1);
+  },
+  addEvent() {
+    this.events.push({
+      name: '',
+      start_time: '',
+      end_time: '',
+      speaker: '',
+      link: '',
+      description: '',
+      image: null,
+    });
+  },
+  handleImageChange(index, event) {
+    this.events[index].image = event.target.files[0];
+  },
+  async createStage() {
   try {
-    const response = await fetch('http://localhost/Backend/laravel/public/api/stage', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        stage: this.stage,
-        events: this.events,
-      }),
+    const formData = new FormData();
+
+
+    formData.append('stage', JSON.stringify(this.stage));
+
+
+    this.events.forEach((event, index) => {
+      for (const key in event) {
+        if (event.hasOwnProperty(key)) {
+          if (key === 'image' && event[key]) {
+            formData.append(`events[${index}][${key}]`, event[key]);
+          } else {
+            formData.append(`events[${index}][${key}]`, event[key]);
+          }
+        }
+      }
     });
 
-    if (!response.ok) {
- 
-      const data = await response.json();
-      this.errorMessage = data.error;
+    const response = await fetch('http://localhost/Backend/laravel/public/api/stage', {
+      method: 'POST',
+      body: formData,
+    });
 
-      alert(this.errorMessage);
-      throw new Error(`HTTP error! status: ${response.status}`);
-    } else {
+      if (!response.ok) {
 
-      this.successMessage = 'Stage has been created successfully!';
- 
-      alert(this.successMessage);
-  
-      this.errorMessage = '';
+        const data = await response.json();
+        this.errorMessage = data.error;
+
+        alert(this.errorMessage);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+
+        this.successMessage = 'Stage has been created successfully!';
+
+        alert(this.successMessage);
+
+        this.errorMessage = '';
+      }
+    } catch (error) {
+
+      this.successMessage = '';
+      console.error(error);
     }
-  } catch (error) {
-
-    this.successMessage = '';
-    console.error(error);
-  }
+  },
 },
 
-
-    },
   };
   </script>
   
