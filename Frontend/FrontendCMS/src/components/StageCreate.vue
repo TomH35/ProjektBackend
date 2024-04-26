@@ -132,7 +132,7 @@
       }
     });
 
-    const response = await fetch('http://localhost/Backend/laravel/public/api/StageCreate', {
+    const response = await fetch('./laravel/public/api/StageCreate', {
       method: 'POST',
       body: formData,
     });

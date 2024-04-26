@@ -55,7 +55,7 @@ async deleteStage(stage) {
       return;
     }
 
-    const response = await fetch(`http://localhost/Backend/laravel/public/api/StageDelete/${stage.id}`, {
+    const response = await fetch(`./laravel/public/api/StageDelete/${stage.id}`, {
       method: 'DELETE',
     });
     if (!response.ok) {

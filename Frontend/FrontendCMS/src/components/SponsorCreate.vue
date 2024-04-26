@@ -66,7 +66,7 @@
             formData.append('image', this.sponsor.image);
           }
   
-          const response = await fetch('http://localhost/Backend/laravel/public/api/SponsorCreate', {
+          const response = await fetch('./laravel/public/api/SponsorCreate', {
             method: 'POST',
             body: formData,
           });
