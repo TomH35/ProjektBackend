@@ -108,7 +108,7 @@
             }
           });
   
-          const response = await fetch(`http://localhost/Backend/laravel/public/api/StageUpdate/${this.stageToEdit.stage.id}`, {
+          const response = await fetch(`./laravel/public/api/StageUpdate/${this.stageToEdit.stage.id}`, {
             method: 'POST',
             body: formData,
           });
