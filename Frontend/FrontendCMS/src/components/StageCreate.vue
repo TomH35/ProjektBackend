@@ -43,12 +43,13 @@
 
         <div class="form-group">
           <label :for="'eventDescription' + index">Description:</label>
-          <textarea :id="'eventDescription' + index" v-model="event.description"></textarea>
+          <textarea :id="'eventDescription' + index" v-model="event.description" required></textarea>
         </div>
 
         <div class="form-group">
           <label :for="'eventImage' + index">Event Image:</label>
           <input :id="'eventImage' + index" type="file" @change="handleImageChange(index, $event)">
+          <img :src="events[index].previewImage" v-if="events[index].previewImage" alt="Image preview" class="imag"/>
         </div>
       </div>
 
@@ -59,61 +60,6 @@
   </div>
 </template>
 
-<style scoped>
-.form {
-
-  
-
-  background-color: #f7f7f7;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-  margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #333;
-}
-
-.form-group input,
-.form-group textarea {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
-
-.event {
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-}
-
-.btn {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-  background-color: #0056b3;
-}
-</style>
 
 
   
@@ -159,6 +105,12 @@
   },
   handleImageChange(index, event) {
     this.events[index].image = event.target.files[0];
+
+    let reader = new FileReader();
+    reader.onload = (e) => {
+      this.events[index].previewImage = e.target.result;
+    };
+    reader.readAsDataURL(this.events[index].image);
   },
   async createStage() {
   try {
@@ -180,7 +132,7 @@
       }
     });
 
-    const response = await fetch('http://localhost/Backend/laravel/public/api/stageCreate', {
+    const response = await fetch('http://localhost/Backend/laravel/public/api/StageCreate', {
       method: 'POST',
       body: formData,
     });
@@ -212,4 +164,62 @@
 
   };
   </script>
+  <style scoped>
+  .form {
+  
+    
+  
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  .imag{
+    width: 200px;
+    height: auto;
+  }
+  .event {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  </style>
   

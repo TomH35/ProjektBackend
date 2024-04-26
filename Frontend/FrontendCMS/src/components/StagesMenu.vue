@@ -29,7 +29,7 @@ export default {
     
     async fetchStagesAndEvents() {
   try {
-    const response = await fetch('http://localhost/Backend/laravel/public/api/GetData'); 
+    const response = await fetch('http://localhost/Backend/laravel/public/api/StageRead'); 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -48,20 +48,26 @@ editStage(stage) {
 },
 
 
-    async deleteStage(stage) {
-    try {
-      const response = await fetch(`http://localhost/Backend/laravel/public/api/DeleteStage/${stage.id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+async deleteStage(stage) {
+  try {
 
-      this.stages = this.stages.filter(s => s.id !== stage.id);
-    } catch (error) {
-      console.error('There was a problem with the fetch operation: ', error);
-    } 
+    if (!window.confirm('Are you sure you want to delete this Stage? This action cannot be undone.')) {
+      return;
+    }
+
+    const response = await fetch(`http://localhost/Backend/laravel/public/api/StageDelete/${stage.id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    this.stages = this.stages.filter(s => s.id !== stage.id);
+  } catch (error) {
+    console.error('There was a problem with the fetch operation: ', error);
+  } 
 }
+
   },
 };
 </script>

@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SponsorController;
+use App\Http\Controllers\StageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
@@ -20,11 +21,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/test-post', [TestController::class, 'testPost']);
-Route::post('/stageCreate', [AdminController::class, 'createStage']);
-Route::get('/GetData', [AdminController::class, 'GetData']);
-Route::delete('/DeleteStage/{id}', [AdminController::class, 'deleteStage']);
-Route::post('/editStage/{id}', [AdminController::class, 'editStage']);
+
+Route::post('/StageCreate', [StageController::class, 'createStage']);
+Route::get('/StageRead', [StageController::class, 'readStage']);
+Route::post('/StageUpdate/{id}', [StageController::class, 'updateStage']);
+Route::delete('/StageDelete/{id}', [StageController::class, 'deleteStage']);
+
+Route::post('/SponsorCreate', [SponsorController::class, 'createSponsor']);
+Route::post('/SponsorRead', [SponsorController::class, 'readSponsor']);
 
 
 

@@ -39,16 +39,9 @@ export default {
   },
 
 
-  handleStageUpdated(updatedStage) {
-
-    this.selectedStage = { ...updatedStage };
-  },
-
-
-
 
     refreshStages() {
-      this.$refs.StagesMenu.fetchStagesandEvents();
+      this.$refs.stagesMenu.fetchStagesAndEvents();
     },
   }
 }

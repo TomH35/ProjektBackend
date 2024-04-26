@@ -43,7 +43,7 @@
   
           <div class="form-group">
             <label :for="'eventDescription' + index">Description:</label>
-            <textarea :id="'eventDescription' + index" v-model="event.description"></textarea>
+            <textarea :id="'eventDescription' + index" v-model="event.description" required></textarea>
           </div>
   
           <div class="form-group">
@@ -108,7 +108,7 @@
             }
           });
   
-          const response = await fetch(`http://localhost/Backend/laravel/public/api/editStage/${this.stageToEdit.stage.id}`, {
+          const response = await fetch(`http://localhost/Backend/laravel/public/api/StageUpdate/${this.stageToEdit.stage.id}`, {
             method: 'POST',
             body: formData,
           });
@@ -122,7 +122,7 @@
             this.successMessage = 'Stage has been updated successfully!';
             alert(this.successMessage);
             this.errorMessage = '';
-            this.$emit('stageUpdated', this.stageToEdit);
+           
 
           }
         } catch (error) {
