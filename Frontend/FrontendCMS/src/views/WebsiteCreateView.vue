@@ -41,7 +41,9 @@ export default {
 
     var ContentWithoutByte = this.Content;
   
+    if (this.img_file[_img]) {
         ContentWithoutByte = this.Content.replace(/<img[^>]*src="data:image\/[^"]*"[^>]*>/g, '<img src="http://localhost/backend/laravel/storage/app/public/images/editor/' + this.img_file[_img].name + '">');
+    }
   
 
     formdata.append('content', ContentWithoutByte);
