@@ -41,10 +41,10 @@ export default {
 
     var ContentWithoutByte = this.Content;
   
-    if (this.img_file[_img]) {
-        ContentWithoutByte = this.Content.replace(/<img[^>]*src="data:image\/[^"]*"[^>]*>/g, '<img src="http://localhost/backend/laravel/storage/app/public/images/editor/' + this.img_file[_img].name + '">');
+    for(var _img in this.img_file){
+        var regex = new RegExp('<img[^>]*src="data:image\/[^"]*"[^>]*>');
+        ContentWithoutByte = ContentWithoutByte.replace(regex, '<img src="http://localhost/backend/laravel/storage/app/public/images/editor/' + this.img_file[_img].name + '">');
     }
-  
 
     formdata.append('content', ContentWithoutByte);
     console.log('Form Data:', [...formdata]);
@@ -52,7 +52,17 @@ export default {
         method: 'POST',
         body: formdata,
     })
+    .then(response => {
+        if(response.ok) {
+            alert('Upload successful!');
+        } else {
+            alert('Upload failed!');
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
+
+
 
         
         
