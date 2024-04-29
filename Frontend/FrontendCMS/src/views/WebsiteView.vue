@@ -1,8 +1,19 @@
 <template>
-    <div>
-      <div v-for="content in contents" :key="content.id">
-        <div v-if="content.id === activeContentId" v-html="fetchedContent"></div>
-        <button @click="fetchContent(content.id)">
+    <div class="content-container">
+      <div 
+        class="content-item" 
+        v-for="content in contents" 
+        :key="content.id"
+      >
+        <div 
+          v-if="content.id === activeContentId" 
+          class="content-display"
+          v-html="fetchedContent"
+        ></div>
+        <button 
+          class="content-button" 
+          @click="fetchContent(content.id)"
+        >
           {{ content.id === activeContentId ? 'Hide Content' : 'Render Content' }}
         </button>
       </div>
@@ -44,6 +55,55 @@
     }
   }
   </script>
+  
+  <style scoped>
+  .content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .content-item {
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+  
+  .content-display {
+    margin-bottom: 1rem;
+  }
+  
+  .content-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .content-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .hljs-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .hljs-left {
+    text-align: left;
+  }
+  
+  .hljs-right {
+    text-align: right;
+  }
+  </style>
   
   <style module>
   .hljs-center {
