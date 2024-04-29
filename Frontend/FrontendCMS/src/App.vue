@@ -1,8 +1,6 @@
 <template>
       <RouterView /> 
-      <div>
-        Test
-      </div>
+  
   </template>
   
   <script>
