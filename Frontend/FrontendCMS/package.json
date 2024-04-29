@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
-    "dotenv": "^16.4.5",
     "highlight.js": "^11.9.0",
     "mavon-editor": "^3.0.1",
     "pinia": "^2.1.7",
