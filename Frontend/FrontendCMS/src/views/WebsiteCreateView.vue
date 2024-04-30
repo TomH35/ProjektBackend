@@ -48,7 +48,7 @@ export default {
 
     formdata.append('content', ContentWithoutByte);
     console.log('Form Data:', [...formdata]);
-    fetch('./laravel/public/api/StageCreate', {
+    fetch('./laravel/public/api/editorPost', {
         method: 'POST',
         body: formdata,
     })
