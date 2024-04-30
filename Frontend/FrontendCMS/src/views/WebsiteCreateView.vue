@@ -29,6 +29,9 @@ export default {
         },
         upload_data($e) {
     var formdata = new FormData();
+    var baseUrl = import.meta.env.VITE_BASE_URL;
+
+
     for(var _img in this.img_file){
         formdata.append(_img, this.img_file[_img], this.img_file[_img].name);
     }
@@ -42,9 +45,10 @@ export default {
     var ContentWithoutByte = this.Content;
   
     for(var _img in this.img_file){
-        var regex = new RegExp('<img[^>]*src="data:image\/[^"]*"[^>]*>');
-        ContentWithoutByte = ContentWithoutByte.replace(regex, '<img src="http://localhost/backend/laravel/storage/app/public/images/editor/' + this.img_file[_img].name + '">');
-    }
+    var regex = /(<img[^>]*src=")data:image\/[^"]*("[^>]*>)/;
+    ContentWithoutByte = ContentWithoutByte.replace(regex, '$1' + baseUrl + '/laravel/public/storage/images/editor/' + this.img_file[_img].name + '$2');
+}
+
 
     formdata.append('content', ContentWithoutByte);
     console.log('Form Data:', [...formdata]);
