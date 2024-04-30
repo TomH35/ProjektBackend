@@ -29,7 +29,7 @@ export default {
     
     async fetchStagesAndEvents() {
   try {
-    const response = await fetch('http://localhost/Backend/laravel/public/api/StageRead'); 
+    const response = await fetch('./laravel/public/api/StageRead'); 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
