@@ -5,6 +5,7 @@
     </div>
     <div class="button-container">
         <button class="upload-button" @click="upload_data">Upload</button>
+        <button class="redirect-button" @click="redirectToWebsiteView">Go to Website View</button>
     </div>
 </template>
 
@@ -60,7 +61,13 @@ export default {
                 }
             })
             .catch(error => console.error('Error:', error));
+        },
+
+        redirectToWebsiteView() {
+            this.$router.push({ name: 'WebsiteView' });
         }
+
+        
     }
 }
 </script>
@@ -96,5 +103,23 @@ export default {
 
 .upload-button:hover {
     background-color: #45a049;
+}
+.redirect-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #af4c4c; 
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 10%;
+}
+
+.redirect-button:hover {
+    background-color: #a04545;
 }
 </style>
