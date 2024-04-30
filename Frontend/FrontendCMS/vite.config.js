@@ -18,7 +18,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/laravel': {
-        target: 'http://localhost',
+        target: process.env.VITE_BASE_URL || 'http://localhost',
         changeOrigin: true,
       },
     },
