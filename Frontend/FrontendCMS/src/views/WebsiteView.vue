@@ -30,7 +30,7 @@
       }
     },
     async mounted() {
-      const response = await fetch(`http://localhost/Backend/laravel/public/api/editorPost`);
+      const response = await fetch(`./laravel/public/api/editorPost`);
       const data = await response.json();
       this.contents = data.content;
     },
@@ -40,7 +40,7 @@
           this.activeContentId = null;
           this.fetchedContent = '';
         } else {
-          const response = await fetch(`http://localhost/Backend/laravel/public/api/editorPost/${id}`);
+          const response = await fetch(`./laravel/public/api/editorPost/${id}`);
           const data = await response.json();
           this.fetchedContent = this.applyStyles(data.content);
           this.activeContentId = id;
