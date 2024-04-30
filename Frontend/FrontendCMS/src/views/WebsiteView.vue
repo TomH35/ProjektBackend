@@ -1,60 +1,61 @@
 <template>
-    <div class="content-container">
+  <div class="content-container">
+    <div 
+      class="content-item" 
+      v-for="content in contents" 
+      :key="content.id"
+    >
+      <h2>{{ content.name }}</h2> 
       <div 
-        class="content-item" 
-        v-for="content in contents" 
-        :key="content.id"
+        v-if="content.id === activeContentId" 
+        class="content-display"
+        v-html="fetchedContent"
+      ></div>
+      <button 
+        class="content-button" 
+        @click="fetchContent(content.id)"
       >
-        <div 
-          v-if="content.id === activeContentId" 
-          class="content-display"
-          v-html="fetchedContent"
-        ></div>
-        <button 
-          class="content-button" 
-          @click="fetchContent(content.id)"
-        >
-          {{ content.id === activeContentId ? 'Hide Content' : 'Render Content' }}
-        </button>
-      </div>
+        {{ content.id === activeContentId ? 'Hide' : 'Preview Custom Website' }}
+      </button>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        contents: [],
-        fetchedContent: '',
-        activeContentId: null
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      contents: [],
+      fetchedContent: '',
+      activeContentId: null
+    }
+  },
+  async mounted() {
+    const response = await fetch(`./laravel/public/api/editorPost`);
+    const data = await response.json();
+    this.contents = data.content;
+  },
+  methods: {
+    async fetchContent(id) {
+      if (this.activeContentId === id) {
+        this.activeContentId = null;
+        this.fetchedContent = '';
+      } else {
+        const response = await fetch(`./laravel/public/api/editorPost/${id}`);
+        const data = await response.json();
+        this.fetchedContent = this.applyStyles(data.content);
+        this.activeContentId = id;
       }
     },
-    async mounted() {
-      const response = await fetch(`./laravel/public/api/editorPost`);
-      const data = await response.json();
-      this.contents = data.content;
-    },
-    methods: {
-      async fetchContent(id) {
-        if (this.activeContentId === id) {
-          this.activeContentId = null;
-          this.fetchedContent = '';
-        } else {
-          const response = await fetch(`./laravel/public/api/editorPost/${id}`);
-          const data = await response.json();
-          this.fetchedContent = this.applyStyles(data.content);
-          this.activeContentId = id;
-        }
-      },
-      applyStyles(html) {
-        return html
-          .replace(/hljs-center/g, this.$style['hljs-center'])
-          .replace(/hljs-left/g, this.$style['hljs-left'])
-          .replace(/hljs-right/g, this.$style['hljs-right']);
-      }
+    applyStyles(html) {
+      return html
+        .replace(/hljs-center/g, this.$style['hljs-center'])
+        .replace(/hljs-left/g, this.$style['hljs-left'])
+        .replace(/hljs-right/g, this.$style['hljs-right']);
     }
   }
-  </script>
+}
+</script>
   
   <style scoped>
   .content-container {

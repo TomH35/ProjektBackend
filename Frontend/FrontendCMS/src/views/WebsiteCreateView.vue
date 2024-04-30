@@ -1,10 +1,11 @@
 <template>
- 
     <mavon-editor ref="md" @imgAdd="$imgAdd" @imgDel="$imgDel" language="en"></mavon-editor>
+    <div class="form-container">
+        <input type="text" v-model="name" placeholder="Enter name here">
+    </div>
     <div class="button-container">
-            <button class="upload-button" @click="upload_data">Upload</button>
-        </div>
-
+        <button class="upload-button" @click="upload_data">Upload</button>
+    </div>
 </template>
 
 <script>
@@ -13,14 +14,10 @@ export default {
         return {
             img_file: {},
             markdownContent: '',
-           
+            name: '', 
         }
     },
-    
     methods: {
-
-    
-
         $imgAdd(pos, $file) {
             this.img_file[pos] = $file;
         },
@@ -28,57 +25,53 @@ export default {
             delete this.img_file[pos];
         },
         upload_data($e) {
-    var formdata = new FormData();
-    var baseUrl = import.meta.env.VITE_BASE_URL;
+            var formdata = new FormData();
+            var baseUrl = import.meta.env.VITE_BASE_URL;
 
+            for(var _img in this.img_file){
+                formdata.append(_img, this.img_file[_img], this.img_file[_img].name);
+            }
+            this.Content = this.$refs.md.d_render;
 
-    for(var _img in this.img_file){
-        formdata.append(_img, this.img_file[_img], this.img_file[_img].name);
-    }
-    this.Content = this.$refs.md.d_render;
+            if (!this.Content.trim()) {
+                alert("You can't send empty content!");
+                return;
+            }
 
-    if (!this.Content.trim()) {
-        alert("You can't send empty content!");
-        return;
-    }
-
-    var ContentWithoutByte = this.Content;
+            var ContentWithoutByte = this.Content;
   
-    for(var _img in this.img_file){
-    var regex = /(<img[^>]*src=")data:image\/[^"]*("[^>]*>)/;
-    ContentWithoutByte = ContentWithoutByte.replace(regex, '$1' + baseUrl + '/laravel/public/storage/images/editor/' + this.img_file[_img].name + '$2');
-}
+            for(var _img in this.img_file){
+                var regex = /(<img[^>]*src=")data:image\/[^"]*("[^>]*>)/;
+                ContentWithoutByte = ContentWithoutByte.replace(regex, '$1' + baseUrl + '/laravel/public/storage/images/editor/' + this.img_file[_img].name + '$2');
+            }
 
-
-    formdata.append('content', ContentWithoutByte);
-    console.log('Form Data:', [...formdata]);
-    fetch('./laravel/public/api/editorPost', {
-        method: 'POST',
-        body: formdata,
-    })
-    .then(response => {
-        if(response.ok) {
-            alert('Upload successful!');
-        } else {
-            alert('Upload failed!');
+            formdata.append('content', ContentWithoutByte);
+            formdata.append('name', this.name); 
+            console.log('Form Data:', [...formdata]);
+            fetch('./laravel/public/api/editorPost', {
+                method: 'POST',
+                body: formdata,
+            })
+            .then(response => {
+                if(response.ok) {
+                    alert('Upload successful!');
+                } else {
+                    alert('Upload failed!');
+                }
+            })
+            .catch(error => console.error('Error:', error));
         }
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-
-
-        
-        
     }
-    
-    
 }
 </script>
 
 <style scoped>
 .editor-container {
     position: relative;
+}
+
+.form-container {
+    margin-top: 10px;
 }
 
 .button-container {

@@ -29,7 +29,7 @@ const router = createRouter({
       component: WebsiteCreateView
     },
     {
-      path: '/CustomWebsite',
+      path: '/CustomWebsiteBrowser',
       name: 'WebsiteView',
       component: WebsiteView
     },

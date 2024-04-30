@@ -11,5 +11,5 @@ class Editor extends Model
 
     protected $table = 'editor';
 
-    protected $fillable = ['content'];
+    protected $fillable = ['content','name'];
 }
