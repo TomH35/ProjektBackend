@@ -1,0 +1,111 @@
+.custom-navbar-color{
+    font-size: 1.3rem;
+    color: #f8f5f2;
+}
+.custom-navbar-top-color{
+    font-size: 1.6rem;
+    color: #f8f5f2;
+}
+.custom-navbar-color:hover{
+    color: #edb83d;
+}
+.custom-button-text{
+    text-decoration: none;
+    color: white;
+}
+.custom-main-margin-top{
+    margin-top: 100px;
+}
+.custom-banner-width{
+    background-size: cover;
+}
+/*
+.custom-banner{
+    height: 100vh;
+    min-height: 500px;
+    background-image: url("../img/pexels-jakub-novacek-924824.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}*/
+.custom-container {
+    margin-top: 80px; /* Adjust the value as needed */
+    margin-bottom: 50px;
+  }
+.custom-img-margin{
+    margin-left: 110px;
+}
+.custom-button-margin{
+    margin-bottom: -10px;
+    margin-top: -10px;
+}
+.custom-margin-left-title{
+    margin-left: -140px;
+}
+.custom-border-radius{
+    border: 1px solid gray;
+    border-radius: 5px;
+    border-collapse: collapse;
+
+}
+.custom-margin-left-image{
+    margin-left:150px;
+}
+.custom-title-color{
+    color: #f8f5f2;
+}
+.custom-body-color{
+    background-color: #f8f5f2;
+
+}
+.custom-button-color{
+    background-color:#edb83d !important;
+    color: #f8f5f2 !important;
+}
+.custom-button-color:hover{
+    background-color: #000000 !important;
+    color: #f8f5f2 !important;
+}
+.custom-link-style{
+    text-decoration: none;
+    color: #f8f5f2;
+
+}
+.custom-link-style:hover{
+    color: #edb83d;
+}
+.custom-list-style{
+    list-style:circle;
+}
+.custom-link-style-zdroj{
+    text-decoration: none;
+    color: #000b29;
+}
+.custom-link-style-zdroj:hover{
+    color: #edb83d;
+}
+.custom-img-size{
+    width: 100px; 
+    height: 70px;
+}
+.custom-background{
+    background-color: #000000 !important;
+}
+.custom-margin-admin{
+    margin-top: 100px;
+}
+.canvas-chart {
+    width: 100px;
+    height: 100px;
+}
+.chart-container {
+    width: 50% !important; /* or any other percentage or fixed size */
+    height: 50% !important; /* or any other percentage or fixed size */
+}
+.another-chart-container {
+    width: 85% !important; /* or any other percentage or fixed size */
+    height: 85% !important; /* or any other percentage or fixed size */
+}
+.custom-form-container{
+    margin-top: 100px;
+}

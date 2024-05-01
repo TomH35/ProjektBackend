@@ -1,3 +1,4 @@
+import './assets/style.css';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import VueHighlightJS from 'vue-highlightjs'
