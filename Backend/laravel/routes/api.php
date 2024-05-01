@@ -33,6 +33,7 @@ Route::post('/editorPost', [EditorController::class, 'store']);
 Route::get('/editorPost/{id?}', [EditorController::class, 'show']);
 Route::post('/test-post', [TestController::class, 'testPost']);
 Route::post('/AdminRegistration', [AuthController::class, 'AdminRegistration']);
+Route::post('/AdminLogin', [AuthController::class, 'AdminLogin']);
 
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -32,5 +33,21 @@ class AuthController extends Controller
 
         // Return a response
         return response()->json(['message' => 'Admin registered successfully'], 201);
+    }
+    public function AdminLogin(Request $request)
+    {
+        // Validate the incoming request
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        // Attempt to authenticate the admin and generate a JWT
+        if (!$token = auth('admin')->attempt($credentials)) {
+            return response()->json(['error' => 'Invalid credentials'], 401);
+        }
+
+        // Return a response with the JWT
+        return response()->json(['token' => $token]);
     }
 }

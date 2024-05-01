@@ -1,54 +1,28 @@
-// loginStore.js
 import { defineStore } from 'pinia';
-import { useBeehivesStore } from '../stores/store';
-import { jwtDecode } from 'jwt-decode';
 
 export const useLoginStore = defineStore({
-  id: 'loginStore',
+  id: 'login',
   state: () => ({
-    userAuthorised: false,
-    jwt: '',
+    token: null,
   }),
-  actions: {
-    async loginAsGuest() {
-      try {
-        const response = await fetch('./inc/GuestAuthorization.php');
-        const data = await response.json();
-
-        const jwt = jwtDecode<jwt>(data.jwt);
-
-        if (jwt.Authorised) {
-          this.userAuthorised = jwt.Authorised;
-          this.jwt = data.jwt;
-          localStorage.setItem('jwt', data.jwt); // Save the JWT to local storage
-          const beehivesStore = useBeehivesStore();
-          await beehivesStore.fetchBeehives();
-          await beehivesStore.fetchBeehiveTable(); 
-          await beehivesStore.fetchDefaultGraphData();
-        } else {
-          console.error('Failed to decode JWT or JWT did not contain Authorised field');
-        }
-
-      } catch (error) {
-        console.error('Failed to login as guest:', error);
+  getters: {
+    getToken(state) {
+      // If the token is null, try to get it from local storage
+      if (!state.token) {
+        state.token = localStorage.getItem('token');
       }
+      return state.token;
     },
-    checkLoginStatus() {
-      const jwt = localStorage.getItem('jwt'); // Get the JWT from local storage
-    
-      if (jwt) {
-        const decodedJwt = jwtDecode<jwt>(jwt);
-    
-        if (decodedJwt.Authorised) {
-          this.userAuthorised = decodedJwt.Authorised;
-          this.jwt = jwt;
-        }
-      }
-    },    
-    logout() {
-      localStorage.removeItem('jwt'); // Remove the JWT from local storage
-      this.userAuthorised = false;
-      this.jwt = '';
+  },
+  actions: {
+    setToken(token) {
+      this.token = token;
+      // You might want to store the token in local storage or a cookie so it persists across page reloads
+      localStorage.setItem('token', token);
+    },
+    clearToken() {
+      this.token = null;
+      localStorage.removeItem('token');
     },
   },
 });
