@@ -33,6 +33,11 @@ const router = createRouter({
       name: 'WebsiteView',
       component: WebsiteView
     },
+    {
+    path: '/AdminRegistration',
+    name: 'AdminRegistration',
+    component: () => import('../views/AdminRegistrationView.vue')
+    }
   ]
 })
 

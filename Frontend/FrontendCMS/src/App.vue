@@ -1,9 +1,23 @@
 <template>
+
+    <Navigation />
+
       <RouterView /> 
+
+      <Footer /> 
   
-  </template>
+</template>
   
-  <script>
+<script>
 import { RouterLink, RouterView } from 'vue-router';
-  </script>
+import Navigation from './components/Navigation.vue';
+import Footer from './components/Footer.vue';
+
+export default {
+  components: {
+    Navigation,
+    Footer
+  }
+}
+</script>
   

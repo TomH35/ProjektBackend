@@ -5,7 +5,8 @@ use App\Http\Controllers\StageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EditorController;
-
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,6 +31,8 @@ Route::post('/SponsorCreate', [SponsorController::class, 'createSponsor']);
 Route::post('/SponsorRead', [SponsorController::class, 'readSponsor']);
 Route::post('/editorPost', [EditorController::class, 'store']);
 Route::get('/editorPost/{id?}', [EditorController::class, 'show']);
+Route::post('/test-post', [TestController::class, 'testPost']);
+Route::post('/AdminRegistration', [AuthController::class, 'AdminRegistration']);
 
 
 
