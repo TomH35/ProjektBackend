@@ -34,9 +34,14 @@ const router = createRouter({
       component: WebsiteView
     },
     {
-    path: '/AdminRegistration',
-    name: 'AdminRegistration',
-    component: () => import('../views/AdminRegistrationView.vue')
+      path: '/main-menu',
+      name: 'MainMenu',
+      component: () => import('../views/MainMenuView.vue')
+    },
+    {
+      path: '/admin-registration',
+      name: 'AdminRegistration',
+      component: () => import('../views/AdminRegistrationView.vue')
     }
   ]
 })

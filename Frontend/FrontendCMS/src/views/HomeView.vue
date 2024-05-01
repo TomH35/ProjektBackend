@@ -4,7 +4,7 @@
       <div class="card w-50">
         <div class="card-body">
           <h5 class="card-title text-center">Prihlásiť sa</h5>
-          <Form @test="testFunc"></Form>
+          <Form @logIn="adminLogin"></Form>
         </div>
       </div>
     </div>
@@ -13,20 +13,29 @@
 
 <script>
 import Form from '../components/Form.vue';
+import { useLoginStore } from '../stores/loginStore';
+import { useRouter } from 'vue-router';
 
 export default {
   components: {
     Form,
   },
   setup() {
-    const testFunc = async () => {
-      const response = await fetch('http://localhost/Backend/laravel/public/api/test-post', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-});
+    const loginStore = useLoginStore();
+    const router = useRouter();
 
+    const adminLogin = async (email, password) => {
+      const response = await fetch('./laravel/public/api/AdminLogin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      });
+      
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -34,11 +43,19 @@ export default {
 
       const data = await response.json();
 
+      // Store the JWT in the login store
+      loginStore.setToken(data.token);
+      console.log(loginStore.token);
+
+      // Redirect to /main-menu
+      router.push('/main-menu');
     };
 
     return {
-      testFunc,
+      adminLogin,
     };
   },
 };
 </script>
+
+

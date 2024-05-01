@@ -1,12 +1,26 @@
 <template>
-  <div class="container">
-    <StageCreate @stageCreated="refreshStages" />
-    <StagesMenu ref="stagesMenu" @edit="editStage" />
-    <StageEdit v-if="isEditing" :stageToEdit="selectedStage" @stageUpdated="handleStageUpdated" />
+  <div class="container custom-container mx-auto" style="width: 80%;">
+    <div class="row">
+      <div class="col-sm-4">
+        <h1 class="text-center">Create Stage</h1>
+        <StageCreate @stageCreated="refreshStages" />
+      </div>
 
+      <div class="col-sm-4">
+        <h1 class="text-center mb-4">Stages</h1>
+        <StagesMenu ref="stagesMenu" @edit="editStage" />
+      </div>
 
+      <div class="col-sm-4">
+        <h1 class="text-center">Edit Stage</h1>
+        <StageEdit v-if="isEditing" :stageToEdit="selectedStage" @stageUpdated="handleStageUpdated" />
+      </div>
+    </div>
   </div>
 </template>
+
+
+
 
 <script>
 import StageCreate from '../components/StageCreate.vue'

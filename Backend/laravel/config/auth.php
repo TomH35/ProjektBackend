@@ -40,7 +40,19 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+    
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => false,
+        ],
+    
+        'admin' => [
+            'driver' => 'jwt', // or 'token' if you're using token-based authentication
+            'provider' => 'admins', // this should correspond to a provider defined in the 'providers' array
+        ],
     ],
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -69,6 +81,10 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class, // replace this with the appropriate model for your admins
+        ],
     ],
 
     /*

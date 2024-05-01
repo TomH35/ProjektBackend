@@ -1,4 +1,5 @@
 <template>
+  <div class="custom-container">
     <div class="sponsor-create">
       <h1>Create Sponsor</h1>
   
@@ -27,6 +28,7 @@
         <button type="submit">Submit</button>
       </form>
     </div>
+  </div>
   </template>
   
   <script>
