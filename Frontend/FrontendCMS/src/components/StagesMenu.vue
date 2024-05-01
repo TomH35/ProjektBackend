@@ -1,13 +1,18 @@
 <template>
-    <div class="stages-menu">
-      <h1>Stages</h1>
-      <div v-for="stage in stages" :key="stage.id" class="stage-item">
-        <p>{{ stage.name }}</p>
-        <button @click="editStage(stage)">Edit</button>
-        <button @click="deleteStage(stage)">Delete</button>
+  <div class="stages-menu">
+    <div v-for="stage in stages" :key="stage.id" class="card mb-3">
+      <div class="card-body w-50">
+        <h5 class="card-title">{{ stage.name }}</h5>
+        <div class="d-flex justify-content-start">
+          <button @click="editStage(stage)" class="btn btn-primary me-2">Edit</button>
+          <button @click="deleteStage(stage)" class="btn btn-danger">Delete</button>
+        </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
+
+
   
 <script>
 export default {
@@ -72,20 +77,4 @@ async deleteStage(stage) {
 };
 </script>
 
-  
-  <style scoped>
-  .stages-menu {
-    width: 30%;
-    height: 100vh;
-    overflow-y: auto;
-  }
-  
-  .stage-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-  }
-  </style>
   
