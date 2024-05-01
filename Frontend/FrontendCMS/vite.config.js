@@ -1,6 +1,8 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
+import dotenv from 'dotenv'
 import vue from '@vitejs/plugin-vue'
+dotenv.config()
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,7 +20,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/laravel': {
-        target: 'http://localhost',
+        target: process.env.VITE_BASE_URL || 'http://localhost',
         changeOrigin: true,
       },
     },

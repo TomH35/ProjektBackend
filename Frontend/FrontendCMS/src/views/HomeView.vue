@@ -20,19 +20,20 @@ export default {
   },
   setup() {
     const testFunc = async () => {
-      const response = await fetch('./laravel/public/api/test-post', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      });
+      const response = await fetch('http://localhost/Backend/laravel/public/api/test-post', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+});
+
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      // Do something with the data
+
     };
 
     return {
