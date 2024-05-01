@@ -8,7 +8,10 @@
       <label for="passwordInput" class="form-label">Heslo</label>
       <input type="password" class="form-control" id="passwordInput" placeholder="Zadajte heslo">
     </div>
-    <button @click.prevent="emitTest" class="btn custom-button-color">Test</button>
+    <button @click.prevent="logIn" class="btn custom-button-color">Login</button>
+    <router-link to="/AdminRegistration" class="ms-3">
+      <button class="btn custom-button-color">Register</button>
+    </router-link>
   </form>
 </template>
 
@@ -17,13 +20,15 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup(_, { emit }) {
-    const emitTest = () => {
-      emit('test');
+    const logIn = () => {
+      emit('logIn');
     };
 
     return {
-      emitTest,
+      logIn,
     };
   },
 });
 </script>
+
+
