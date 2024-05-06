@@ -39,16 +39,14 @@
     },
     methods: {
         registerAdmin() {
-    // Define the URL where you want to send the POST request
     const url = './laravel/public/api/AdminRegistration';
 
-    // Use fetch to send a POST request
     fetch(url, {
-      method: 'POST', // Specify the method
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json' // Set the content type to JSON
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.admin) // Convert the admin data to a JSON string
+      body: JSON.stringify(this.admin)
     })
     .then(response => {
       if (!response.ok) {
@@ -57,11 +55,9 @@
       return response.json();
     })
     .then(data => {
-      // Handle the response data here
       console.log(data);
     })
     .catch(error => {
-      // Handle any errors here
       console.error('There was an error!', error);
     });
   }

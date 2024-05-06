@@ -4,25 +4,30 @@ export const useLoginStore = defineStore({
   id: 'login',
   state: () => ({
     token: null,
+    admin_id: null,
   }),
   getters: {
     getToken(state) {
-      // If the token is null, try to get it from local storage
-      if (!state.token) {
-        state.token = localStorage.getItem('token');
-      }
       return state.token;
+    },
+    getAdminId(state) {
+      return state.admin_id;
     },
   },
   actions: {
-    setToken(token) {
+    setToken(token, admin_id) { 
       this.token = token;
-      // You might want to store the token in local storage or a cookie so it persists across page reloads
+      this.admin_id = admin_id;
       localStorage.setItem('token', token);
+      localStorage.setItem('admin_id', admin_id);
     },
     clearToken() {
       this.token = null;
+      this.admin_id = null;
       localStorage.removeItem('token');
+      localStorage.removeItem('admin_id');
     },
   },
 });
+
+
