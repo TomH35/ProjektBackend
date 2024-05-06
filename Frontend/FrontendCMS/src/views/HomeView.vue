@@ -35,7 +35,6 @@ export default {
           password: password
         })
       });
-      
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -43,11 +42,8 @@ export default {
 
       const data = await response.json();
 
-      // Store the JWT in the login store
-      loginStore.setToken(data.token);
+      loginStore.setToken(data.token, data.admin_id);
       console.log(loginStore.token);
-
-      // Redirect to /main-menu
       router.push('/main-menu');
     };
 
@@ -57,5 +53,6 @@ export default {
   },
 };
 </script>
+
 
 

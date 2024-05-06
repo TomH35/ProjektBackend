@@ -42,6 +42,11 @@ const router = createRouter({
       path: '/admin-registration',
       name: 'AdminRegistration',
       component: () => import('../views/AdminRegistrationView.vue')
+    },
+    {
+      path: '/speaker-manager',
+      name: 'SpeakerManager',
+      component: () => import('../views/SpeakerManagerView.vue')
     }
   ]
 })
