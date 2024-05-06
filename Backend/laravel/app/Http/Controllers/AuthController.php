@@ -42,12 +42,18 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        // Attempt to authenticate the admin and generate a JWT
+        // Attempt to authenticate the admin
         if (!$token = auth('admin')->attempt($credentials)) {
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
 
-        // Return a response with the JWT
-        return response()->json(['token' => $token]);
+        // Get the authenticated admin
+        $admin = Auth::guard('admin')->user();
+
+        // Return a response with the admin's id and JWT
+        return response()->json([
+            'admin_id' => $admin->id,
+            'token' => $token,
+        ]);
     }
 }
