@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EditorController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SpeakerController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,6 +35,8 @@ Route::get('/editorPost/{id?}', [EditorController::class, 'show']);
 Route::post('/test-post', [TestController::class, 'testPost']);
 Route::post('/AdminRegistration', [AuthController::class, 'AdminRegistration']);
 Route::post('/AdminLogin', [AuthController::class, 'AdminLogin']);
+Route::post('/SpeakerCreate', [SpeakerController::class, 'createSpeaker']);
+
 
 
 
