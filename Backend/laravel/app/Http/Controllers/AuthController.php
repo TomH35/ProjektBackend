@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function AdminRegistration(Request $request)
     {
-        // Validate the incoming request
+       
         $validatedData = $request->validate([
             'meno' => 'required|max:255',
             'priezvisko' => 'required|max:255',
@@ -19,41 +19,93 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        // Create a new admin
+  
         $admin = new Admin;
 
-        // Set the admin's attributes
+     
         $admin->meno = $validatedData['meno'];
         $admin->priezvisko = $validatedData['priezvisko'];
         $admin->email = $validatedData['email'];
         $admin->password = Hash::make($validatedData['password']);
 
-        // Save the admin to the database
+     
         $admin->save();
 
-        // Return a response
+   
         return response()->json(['message' => 'Admin registered successfully'], 201);
     }
-    public function AdminLogin(Request $request)
+   
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        // Validate the incoming request
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $this->middleware('auth:api', ['except' => ['login']]);
+    }
 
-        // Attempt to authenticate the admin
-        if (!$token = auth('admin')->attempt($credentials)) {
-            return response()->json(['error' => 'Invalid credentials'], 401);
+    /**
+     * Get a JWT via given credentials.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function login()
+    {
+        $credentials = request(['email', 'password']);
+
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        // Get the authenticated admin
-        $admin = Auth::guard('admin')->user();
+        return $this->respondWithToken($token);
+    }
 
-        // Return a response with the admin's id and JWT
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
+
+    /**
+     * Log the user out (Invalidate the token).
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
         return response()->json([
-            'admin_id' => $admin->id,
-            'token' => $token,
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
 }
