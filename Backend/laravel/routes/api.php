@@ -47,6 +47,7 @@ Route::group([
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
     Route::post('SpeakerCreate', [SpeakerController::class, 'createSpeaker']);
+    Route::post('SpeakerMenu', [SpeakerController::class, 'getAllSpeakers']);
 
 });
 
