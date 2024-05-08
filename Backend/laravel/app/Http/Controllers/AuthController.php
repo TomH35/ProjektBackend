@@ -58,7 +58,9 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return $this->respondWithToken($token);
+        $admin = Auth::user();
+
+        return $this->respondWithToken($token, $admin);
     }
 
     /**
@@ -100,11 +102,12 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithToken($token)
+    protected function respondWithToken($token, $admin)
     {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
+            'admin_id' => $admin->id,
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }

@@ -25,7 +25,7 @@ export default {
     const router = useRouter();
 
     const adminLogin = async (email, password) => {
-      const response = await fetch('./laravel/public/api/AdminLogin', {
+      const response = await fetch('./laravel/public/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ export default {
 
       const data = await response.json();
 
-      loginStore.setToken(data.token, data.admin_id);
+      loginStore.setToken(data.access_token, data.admin_id);
       console.log(loginStore.token);
       router.push('/main-menu');
     };

@@ -11,25 +11,48 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item" v-for="(url, page) in headerMenu" :key="page">
-              <router-link :to="url" class="nav-link">
-              <span class="custom-navbar-color">{{ page }}</span>
-              </router-link>
-            </li>
-          </ul>
+            <router-link :to="url" class="nav-link" @click.native="handleClick(page)">
+                <span class="custom-navbar-color">{{ page }}</span>
+            </router-link>
+          </li>
+        </ul>
         </div>
       </div>
     </nav>
 </template>
-  
 <script>
+import { useLoginStore } from '../stores/loginStore';
 export default {
-  data() {
-    return {
-      headerMenu: {
-        "Logout": "/",
-        // ...other menu items...
-      },
-    };
-  },
+    data() {
+        return {
+            headerMenu: {
+                "Logout": "/",
+                // ...other menu items...
+            },
+        };
+    },
+    methods: {
+    handleClick(page) {
+        if (page === 'Logout') {
+            const loginStore = useLoginStore();
+            const token = loginStore.getToken;
+
+            fetch('./laravel/public/api/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `bearer ${token}`,
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                loginStore.clearToken();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    },
+},
 };
 </script>
