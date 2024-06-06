@@ -35,8 +35,21 @@ Route::get('/editorPost/{id?}', [EditorController::class, 'show']);
 Route::post('/test-post', [TestController::class, 'testPost']);
 Route::post('/AdminRegistration', [AuthController::class, 'AdminRegistration']);
 Route::post('/AdminLogin', [AuthController::class, 'AdminLogin']);
-Route::post('/SpeakerCreate', [SpeakerController::class, 'createSpeaker']);
+//Route::post('/SpeakerCreate', [SpeakerController::class, 'createSpeaker']);
+Route::group([
 
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::post('me', [AuthController::class, 'me']);
+    Route::post('SpeakerCreate', [SpeakerController::class, 'createSpeaker']);
+    Route::post('SpeakerMenu', [SpeakerController::class, 'getAllSpeakers']);
+
+});
 
 
 
