@@ -19,10 +19,9 @@ use App\Http\Controllers\SpeakerController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
 
 Route::post('/StageCreate', [StageController::class, 'createStage']);
 Route::get('/StageRead', [StageController::class, 'readStage']);
@@ -34,21 +33,19 @@ Route::post('/editorPost', [EditorController::class, 'store']);
 Route::get('/editorPost/{id?}', [EditorController::class, 'show']);
 Route::post('/test-post', [TestController::class, 'testPost']);
 Route::post('/AdminRegistration', [AuthController::class, 'AdminRegistration']);
-Route::post('/AdminLogin', [AuthController::class, 'AdminLogin']);
-//Route::post('/SpeakerCreate', [SpeakerController::class, 'createSpeaker']);
+Route::get('/Speakers', [StageController::class, 'getSpeakers']);
+
 Route::group([
-
     'prefix' => 'auth'
-
-], function ($router) {
-
+], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
     Route::post('SpeakerCreate', [SpeakerController::class, 'createSpeaker']);
     Route::post('SpeakerMenu', [SpeakerController::class, 'getAllSpeakers']);
-
+    Route::delete('SpeakerDelete/{id}', [SpeakerController::class, 'deleteSpeaker']);
+    Route::post('SpeakerUpdate/{id}', [SpeakerController::class, 'updateSpeaker']);
 });
 
 

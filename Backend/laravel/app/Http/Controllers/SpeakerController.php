@@ -16,23 +16,17 @@ class SpeakerController extends Controller
     public function createSpeaker(Request $request)
     {
         try {
-            // Get the request data
             $speakerData = json_decode($request->get('speaker'), true);
             $adminId = $request->get('admin_id');
             $image = $request->file('image');
-    
-            // Validate the request data here...
-    
-            // Store the image file and get its path
+
             if ($image) {
                 $path = $image->store('public/images/speakers');
                 $speakerData['image_path'] = str_replace('public/', '', $path);
             }
     
-            // Add the admin_id to the speaker data
             $speakerData['admin_id'] = $adminId;
     
-            // Map the Vue.js property names to the database column names
             $speakerData['short_description'] = $speakerData['shortDescription'];
             unset($speakerData['shortDescription']);
     
@@ -42,7 +36,6 @@ class SpeakerController extends Controller
             $speakerData['social_links'] = $speakerData['socialLinks'];
             unset($speakerData['socialLinks']);
     
-            // Create the speaker
             $speaker = Speaker::create($speakerData);
     
             return response()->json(['message' => 'Speaker has been created successfully!', 'speaker' => $speaker], 201);
@@ -65,6 +58,49 @@ class SpeakerController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function deleteSpeaker($id)
+    {
+        try {
+            $speaker = Speaker::findOrFail($id);
+            
+            $speaker->delete();
+
+            return response()->json(['message' => 'Speaker has been deleted successfully!'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function updateSpeaker(Request $request, $id)
+{
+    try {
+        $speaker = Speaker::findOrFail($id);
+
+        $speakerData = $request->all();
+
+        if ($request->hasFile('image')) {
+           
+            if ($speaker->image_path) {
+                Storage::delete('public/' . $speaker->image_path);
+            }
+            
+            $path = $request->file('image')->store('public/images/speakers');
+            $speakerData['image_path'] = str_replace('public/', '', $path);
+        }
+
+        $speakerData['short_description'] = $speakerData['short_description'];
+        $speakerData['long_description'] = $speakerData['long_description'];
+        $speakerData['social_links'] = $speakerData['social_links'];
+
+        $speaker->update($speakerData);
+
+        return response()->json(['message' => 'Speaker has been updated successfully!', 'speaker' => $speaker], 200);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
     
 
 }

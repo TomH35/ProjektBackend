@@ -9,5 +9,26 @@ class Event extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['stage_id', 'name', 'start_time', 'end_time', 'speaker', 'link', 'description', 'image_path'];
+    protected $fillable = [
+        'stage_id',
+        'speaker_id',
+        'name',
+        'start_time',
+        'end_time',
+        'link',
+        'description',
+        'image_path'
+    ];
+
+    public function stage()
+    {
+        return $this->belongsTo(Stage::class);
+    }
+
+    public function speaker()
+    {
+        return $this->belongsTo(Speaker::class);
+    }
 }
+
+
