@@ -4,7 +4,11 @@ import StageManagerView from '../views/StageManagerView.vue'
 import SponsorManagerView from '@/views/SponsorManagerView.vue'
 import WebsiteCreateView from '@/views/WebsiteCreateView.vue'
 import WebsiteView from '@/views/WebsiteView.vue'
-
+import GalleryManagerView from '@/views/GalleryManagerView.vue'
+import GalleryCreate from '@/components/GalleryCreate.vue'
+import GalleryView from '@/views/GalleryView.vue'
+import GalleryDetail from '@/components/GalleryDetail.vue';
+import GalleryEditView from '@/views/GalleryEditView.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -32,6 +36,33 @@ const router = createRouter({
       path: '/CustomWebsiteBrowser',
       name: 'WebsiteView',
       component: WebsiteView
+    },
+    {
+      path: '/galleries',
+      name: 'GalleryManager',
+      component: GalleryManagerView
+    },
+    {
+      path: '/galleries/create',
+      name: 'GalleryCreate',
+      component: GalleryCreate
+    },
+    {
+      path: '/galleries/:id',
+      name: 'GalleryView',
+      component: GalleryView,
+      props: true
+    },
+    {
+      path: '/galleries/:id',
+      name: 'GalleryDetail',
+      component: GalleryDetail,
+    },
+    {
+      path: '/galleries/edit/:id',
+      name: 'GalleryEdit',
+      component: GalleryEditView,
+      props: true
     },
     {
       path: '/main-menu',

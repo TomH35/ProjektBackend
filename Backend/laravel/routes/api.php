@@ -8,6 +8,8 @@ use App\Http\Controllers\EditorController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SpeakerController;
+use App\Http\Controllers\GalleryController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,6 +39,11 @@ Route::post('/AdminRegistration', [AuthController::class, 'AdminRegistration']);
 Route::post('/AdminLogin', [AuthController::class, 'AdminLogin']);
 Route::post('/SpeakerCreate', [SpeakerController::class, 'createSpeaker']);
 
+Route::post('/galleriesCreate', [GalleryController::class, 'createGallery']);
+Route::get('/galleriesRead', [GalleryController::class, 'readGalleries']);
+Route::get('/galleriesShow/{id}', [GalleryController::class, 'show']);
+Route::post('/galleriesUpdate/{id}', [GalleryController::class, 'update']);
+Route::delete('/galleriesDestroy/{id}', [GalleryController::class, 'destroy']);
 
 
 
