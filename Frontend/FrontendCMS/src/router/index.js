@@ -7,8 +7,11 @@ import WebsiteView from '@/views/WebsiteView.vue'
 import GalleryManagerView from '@/views/GalleryManagerView.vue'
 import GalleryCreate from '@/components/GalleryCreate.vue'
 import GalleryView from '@/views/GalleryView.vue'
-import GalleryDetail from '@/components/GalleryDetail.vue';
-import GalleryEditView from '@/views/GalleryEditView.vue';
+import GalleryDetail from '@/components/GalleryDetail.vue'
+import GalleryEditView from '@/views/GalleryEditView.vue'
+import AboutUsManagerView from '@/views/AboutUsManagerView.vue'
+import AboutUsCreate from '@/components/AboutUsCreate.vue'
+import AboutUsEdit from '@/components/AboutUsEdit.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -63,6 +66,22 @@ const router = createRouter({
       name: 'GalleryEdit',
       component: GalleryEditView,
       props: true
+    },
+    {
+      path: '/about_us',
+      name: 'AboutUsManager',
+      component: AboutUsManagerView,
+    },
+    {
+      path: '/about_us/create',
+      name: 'AboutUsCreate',
+      component: AboutUsCreate,
+    },
+    {
+      path: '/about_us/edit/:id',
+      name: 'AboutUsEdit',
+      component: AboutUsEdit,
+      props: true,
     },
     {
       path: '/main-menu',

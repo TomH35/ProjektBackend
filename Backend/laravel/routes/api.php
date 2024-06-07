@@ -9,6 +9,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\AboutUsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,11 @@ Route::get('/galleriesRead', [GalleryController::class, 'readGalleries']);
 Route::get('/galleriesShow/{id}', [GalleryController::class, 'show']);
 Route::post('/galleriesUpdate/{id}', [GalleryController::class, 'update']);
 Route::delete('/galleriesDestroy/{id}', [GalleryController::class, 'destroy']);
-
+Route::get('/about_us', [AboutUsController::class, 'index']);
+Route::get('/about_us/{id}', [AboutUsController::class, 'show']);
+Route::post('/about_us', [AboutUsController::class, 'store']);
+Route::post('/about_us/{id}', [AboutUsController::class, 'update']);
+Route::delete('/about_us/{id}', [AboutUsController::class, 'destroy']);
 
 
 
