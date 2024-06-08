@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-body">
-      <h2 class="card-title text-center custom-margin-bottom">Speaker Profile</h2>
+      <h2 class="card-title text-center custom-margin-bottom">Create Speaker</h2>
       <form @submit.prevent="createSpeaker">
         <div class="mb-3">
           <label for="name" class="form-label">Name:</label>
@@ -89,10 +89,10 @@ export default {
           formData.append('image', this.speaker.image);
         }
 
-        const response = await fetch('./laravel/public/api/SpeakerCreate', {
+        const response = await fetch('./laravel/public/api/auth/SpeakerCreate', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `bearer ${token}`,
           },
           body: formData,
         });

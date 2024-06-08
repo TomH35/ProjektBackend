@@ -9,11 +9,6 @@ class Speaker extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'surname',
@@ -24,11 +19,14 @@ class Speaker extends Model
         'admin_id',
     ];
 
-    /**
-     * Get the admin that owns the speaker.
-     */
     public function admin()
     {
         return $this->belongsTo(Admin::class);
     }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 }
+

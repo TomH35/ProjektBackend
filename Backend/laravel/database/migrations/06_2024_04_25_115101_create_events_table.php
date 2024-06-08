@@ -16,16 +16,17 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('stage_id');
+            $table->unsignedBigInteger('speaker_id')->nullable();
             $table->string('name');
             $table->time('start_time');
             $table->time('end_time');
-            $table->string('speaker');
             $table->string('link')->nullable();
             $table->text('description');
             $table->string('image_path')->nullable();
             $table->timestamps();
 
             $table->foreign('stage_id')->references('id')->on('stages')->onDelete('cascade');
+            $table->foreign('speaker_id')->references('id')->on('speakers')->onDelete('set null');
         });
     }
 
@@ -36,6 +37,13 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('events', function (Blueprint $table) {
+            $table->dropForeign(['stage_id']);
+            $table->dropForeign(['speaker_id']);
+        });
+        
         Schema::dropIfExists('events');
     }
 };
+
+

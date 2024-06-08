@@ -9,9 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login', 'AdminRegistration']]);
+    }
+
     public function AdminRegistration(Request $request)
     {
-        // Validate the incoming request
         $validatedData = $request->validate([
             'meno' => 'required|max:255',
             'priezvisko' => 'required|max:255',
@@ -19,41 +23,54 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        // Create a new admin
         $admin = new Admin;
-
-        // Set the admin's attributes
         $admin->meno = $validatedData['meno'];
         $admin->priezvisko = $validatedData['priezvisko'];
         $admin->email = $validatedData['email'];
         $admin->password = Hash::make($validatedData['password']);
-
-        // Save the admin to the database
         $admin->save();
 
-        // Return a response
         return response()->json(['message' => 'Admin registered successfully'], 201);
     }
-    public function AdminLogin(Request $request)
-    {
-        // Validate the incoming request
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
 
-        // Attempt to authenticate the admin
-        if (!$token = auth('admin')->attempt($credentials)) {
-            return response()->json(['error' => 'Invalid credentials'], 401);
+    public function login()
+    {
+        $credentials = request(['email', 'password']);
+
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        // Get the authenticated admin
-        $admin = Auth::guard('admin')->user();
+        $admin = Auth::user();
 
-        // Return a response with the admin's id and JWT
+        return $this->respondWithToken($token, $admin);
+    }
+
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+    protected function respondWithToken($token, $admin = null)
+    {
         return response()->json([
-            'admin_id' => $admin->id,
-            'token' => $token,
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'admin_id' => $admin ? $admin->id : null,
+            'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
 }
+
