@@ -8,6 +8,9 @@ use App\Http\Controllers\EditorController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SpeakerController;
+use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\AboutUsController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,6 +36,16 @@ Route::post('/editorPost', [EditorController::class, 'store']);
 Route::get('/editorPost/{id?}', [EditorController::class, 'show']);
 Route::post('/test-post', [TestController::class, 'testPost']);
 Route::post('/AdminRegistration', [AuthController::class, 'AdminRegistration']);
+Route::post('/galleriesCreate', [GalleryController::class, 'createGallery']);
+Route::get('/galleriesRead', [GalleryController::class, 'readGalleries']);
+Route::get('/galleriesShow/{id}', [GalleryController::class, 'show']);
+Route::post('/galleriesUpdate/{id}', [GalleryController::class, 'update']);
+Route::delete('/galleriesDestroy/{id}', [GalleryController::class, 'destroy']);
+Route::get('/about_us', [AboutUsController::class, 'index']);
+Route::get('/about_us/{id}', [AboutUsController::class, 'show']);
+Route::post('/about_us', [AboutUsController::class, 'store']);
+Route::post('/about_us/{id}', [AboutUsController::class, 'update']);
+Route::delete('/about_us/{id}', [AboutUsController::class, 'destroy']);
 Route::get('/Speakers', [StageController::class, 'getSpeakers']);
 
 Route::group([
