@@ -15,7 +15,7 @@ export const useLoginStore = defineStore({
     },
   },
   actions: {
-    setToken(token, admin_id) { 
+    setToken(token, admin_id) {
       this.token = token;
       this.admin_id = admin_id;
       localStorage.setItem('token', token);
@@ -27,7 +27,16 @@ export const useLoginStore = defineStore({
       localStorage.removeItem('token');
       localStorage.removeItem('admin_id');
     },
+    loadTokenFromLocalStorage() {
+      const token = localStorage.getItem('token');
+      const admin_id = localStorage.getItem('admin_id');
+      if (token && admin_id) {
+        this.token = token;
+        this.admin_id = admin_id;
+      }
+    },
   },
 });
+
 
 
