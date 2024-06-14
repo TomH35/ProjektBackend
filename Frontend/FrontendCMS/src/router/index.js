@@ -97,6 +97,11 @@ const router = createRouter({
       path: '/speaker-manager',
       name: 'SpeakerManager',
       component: () => import('../views/SpeakerManagerView.vue')
+    },
+    {
+      path: '/event-registration',
+      name: 'EventRegistration',
+      component: () => import('../views/EventRegistrationView.vue')
     }
   ]
 })

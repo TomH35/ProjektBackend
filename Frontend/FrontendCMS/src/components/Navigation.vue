@@ -27,6 +27,7 @@ export default {
         return {
             headerMenu: {
                 "Logout": "/",
+                "Conference registration": "/event-registration"
                 // ...other menu items...
             },
         };

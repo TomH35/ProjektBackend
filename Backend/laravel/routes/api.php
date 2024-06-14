@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,9 @@ Route::post('/about_us', [AboutUsController::class, 'store']);
 Route::post('/about_us/{id}', [AboutUsController::class, 'update']);
 Route::delete('/about_us/{id}', [AboutUsController::class, 'destroy']);
 Route::get('/Speakers', [StageController::class, 'getSpeakers']);
+Route::post('/register', [RegistrationController::class, 'store']);
+Route::get('/events', [StageController::class, 'getEvents']);
+Route::get('/EventsGroupedByTime', [StageController::class, 'getEventsGroupedByTime']);
 
 Route::group([
     'prefix' => 'auth'

@@ -120,6 +120,27 @@ class StageController extends Controller
     return response()->json($speakers);
     }
 
+    public function getEvents()
+    {
+        $events = Event::all();
+        return response()->json($events);
+    }
 
+    public function getEventsGroupedByTime()
+{
+    $events = Event::orderBy('start_time')->get();
+    $groupedEvents = [];
 
+    foreach ($events as $event) {
+        $timeWindow = $event->start_time . ' - ' . $event->end_time;
+        if (!isset($groupedEvents[$timeWindow])) {
+            $groupedEvents[$timeWindow] = [];
+        }
+        $groupedEvents[$timeWindow][] = $event;
+    }
+
+    return response()->json($groupedEvents);
+}
+
+    
 }
