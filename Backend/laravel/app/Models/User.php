@@ -4,29 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+class User extends Authenticatable
 {
     use HasFactory;
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'user';
+    protected $fillable = ['email'];
 
-    protected $fillable = ["meno", "email"];
-
-    public function phone(): HasOne
+    public function events()
     {
-        return $this->hasOne(Phone::class);
-    }
-
-    public function address(): HasMany
-    {
-        return $this->hasMany(Address::class);
+        return $this->belongsToMany(Event::class, 'event_registrations')
+                    ->withTimestamps();
     }
 }
+

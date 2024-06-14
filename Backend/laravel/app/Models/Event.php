@@ -29,6 +29,12 @@ class Event extends Model
     {
         return $this->belongsTo(Speaker::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'event_registrations')
+                    ->withTimestamps();
+    }
 }
 
 

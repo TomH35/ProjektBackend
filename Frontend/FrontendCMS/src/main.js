@@ -1,13 +1,14 @@
 import './assets/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import VueHighlightJS from 'vue-highlightjs'
-import 'highlight.js/styles/default.css'
+import VueHighlightJS from 'vue-highlightjs';
+import 'highlight.js/styles/default.css';
+import { useLoginStore } from './stores/loginStore';
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import mavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import mavonEditor from 'mavon-editor';
+import 'mavon-editor/dist/css/index.css';
 
 import App from './App.vue'
 import router from './router'
@@ -20,6 +21,9 @@ app.use(VueHighlightJS)
 app.use(createPinia())
 app.use(router)
 app.use(mavonEditor)
+
+const loginStore = useLoginStore();
+loginStore.loadTokenFromLocalStorage();
 
 app.mount('#app')
 
