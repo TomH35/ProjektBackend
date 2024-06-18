@@ -53,11 +53,10 @@
               <label :for="'eventCapacity' + index" class="form-label">Capacity:</label>
               <input :id="'eventCapacity' + index" v-model="event.capacity" type="number" class="form-control" required>
             </div>
-           
-            <div class="mb-3">
-              <label :for="'eventSelectable' + index" class="form-label">Selectable:</label>
-              <input :id="'eventSelectable' + index" type="checkbox" v-model="event.is_selectable" class="form-check-input">
-            </div>
+            
+            <label :for="'eventSelectable' + index" class="form-label">Selectable:</label>
+            <input :id="'eventSelectable' + index" type="checkbox" :checked="event.is_selectable" @change="event.is_selectable = $event.target.checked" class="form-check-input">
+
 
             <div class="mb-3">
               <label :for="'eventImage' + index" class="form-label">Event Image:</label>
@@ -92,6 +91,8 @@ export default {
   created() {
     this.fetchSpeakers();
   },
+
+  
   methods: {
     async fetchSpeakers() {
       try {
@@ -161,6 +162,7 @@ export default {
           this.successMessage = 'Stage has been updated successfully!';
           alert(this.successMessage);
           this.errorMessage = '';
+          this.$emit('stageUpdated');
         }
       } catch (error) {
         this.successMessage = '';
