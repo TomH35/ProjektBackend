@@ -57,6 +57,7 @@
 
           <button type="button" @click="addEvent" class="btn btn-primary mt-3">Add Event</button>
           <button type="submit" class="btn btn-success mt-3">Update Stage</button>
+          <button type="button" @click="removeEvent(index)" class="btn btn-danger mt-3">Remove Event</button>
         </form>
       </div>
     </div>
