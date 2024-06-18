@@ -4,7 +4,7 @@
         <h2 class="banner-title">Speakers</h2>
         <div class="speakers-list">
           <div v-for="speaker in speakers" :key="speaker.id" class="speaker">
-            <img :src="speaker.image_path" :alt="`${speaker.name} ${speaker.surname}`" class="speaker-image">
+            <img :src="`${baseUrl}/laravel/public/storage/${speaker.image_path}`" :alt="`${speaker.name} ${speaker.surname}`" class="speaker-image">
             <div class="speaker-info">
               <h3 class="speaker-name">{{ speaker.name }} {{ speaker.surname }}</h3>
               <p class="speaker-bio">{{ speaker.short_description }}</p>
@@ -22,6 +22,7 @@
   export default {
     data() {
       return {
+        baseUrl: import.meta.env.VITE_BASE_URL,
         speakers: [],
       };
     },
