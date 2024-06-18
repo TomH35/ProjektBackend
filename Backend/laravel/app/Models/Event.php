@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +16,8 @@ class Event extends Model
         'end_time',
         'link',
         'description',
-        'image_path'
+        'image_path',
+        'capacity',
     ];
 
     public function stage()
@@ -33,8 +33,9 @@ class Event extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'event_registrations')
-                    ->withTimestamps();
+            ->withTimestamps();
     }
 }
+
 
 
