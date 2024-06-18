@@ -53,11 +53,10 @@
               <label :for="'eventCapacity' + index" class="form-label">Capacity:</label>
               <input :id="'eventCapacity' + index" v-model="event.capacity" type="number" class="form-control" required>
             </div>
-           
-            <div class="mb-3">
-              <label :for="'eventSelectable' + index" class="form-label">Selectable:</label>
-              <input :id="'eventSelectable' + index" type="checkbox" v-model="event.is_selectable" class="form-check-input">
-            </div>
+            
+            <label :for="'eventSelectable' + index" class="form-label">Selectable:</label>
+            <input :id="'eventSelectable' + index" type="checkbox" :checked="event.is_selectable" @change="event.is_selectable = $event.target.checked" class="form-check-input">
+
 
             <div class="mb-3">
               <label :for="'eventImage' + index" class="form-label">Event Image:</label>
@@ -67,7 +66,7 @@
 
           <button type="button" @click="addEvent" class="btn btn-primary mt-3">Add Event</button>
           <button type="submit" class="btn btn-success mt-3">Update Stage</button>
-          <button type="button" @click="removeEvent(index)" class="btn btn-danger mt-3">Remove Event</button>
+          <button type="button" @click="removeEvent()" class="btn btn-danger mt-3">Remove Event</button>
         </form>
       </div>
     </div>
@@ -92,6 +91,8 @@ export default {
   created() {
     this.fetchSpeakers();
   },
+
+  
   methods: {
     async fetchSpeakers() {
       try {
@@ -104,8 +105,8 @@ export default {
         console.error('There was a problem with the fetch operation: ', error);
       }
     },
-    removeEvent(index) {
-      this.stageToEdit.events.splice(index, 1);
+    removeEvent() {
+      this.stageToEdit.events.pop();
     },
     addEvent() {
       this.stageToEdit.events.push({
@@ -161,6 +162,7 @@ export default {
           this.successMessage = 'Stage has been updated successfully!';
           alert(this.successMessage);
           this.errorMessage = '';
+          this.$emit('stageUpdated');
         }
       } catch (error) {
         this.successMessage = '';

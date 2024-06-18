@@ -43,6 +43,11 @@ export default {
     };
   },
   methods: {
+
+    handleStageUpdated() {
+
+    this.refreshStages();
+  },
     editStage(stage) {
     if (this.isEditing && this.selectedStage === stage) {
       this.isEditing = false; 
