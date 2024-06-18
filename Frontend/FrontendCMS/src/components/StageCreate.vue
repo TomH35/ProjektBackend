@@ -54,6 +54,12 @@
             </div>
 
             <div class="mb-3">
+<label :for="'eventSelectable' + index" class="form-label">Selectable:</label>
+<input :id="'eventSelectable' + index" type="checkbox" v-model="event.is_selectable" class="form-check-input">
+
+</div>
+
+            <div class="mb-3">
               <label :for="'eventImage' + index" class="form-label">Event Image:</label>
               <input :id="'eventImage' + index" type="file" class="form-control" @change="handleImageChange(index, $event)">
               <img :src="events[index].previewImage" v-if="events[index].previewImage" alt="Image preview" class="img-thumbnail mt-2"/>
@@ -88,7 +94,8 @@ export default {
           link: '',
           description: '',
           image: null,
-          capacity: 0, // Add capacity field to initial event data
+          capacity: 0,
+          is_selectable: true, 
         },
       ],
       speakers: [],
@@ -121,7 +128,8 @@ export default {
         link: '',
         description: '',
         image: null,
-        capacity: 0, // Add capacity field to new event data
+        capacity: 0, 
+        is_selectable: true,
       });
     },
     handleImageChange(index, event) {

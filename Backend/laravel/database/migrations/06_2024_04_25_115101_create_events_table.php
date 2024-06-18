@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('link')->nullable();
             $table->text('description');
             $table->string('image_path')->nullable();
+            $table->boolean('is_selectable')->default(true);
             $table->timestamps();
 
             $table->foreign('stage_id')->references('id')->on('stages')->onDelete('cascade');
@@ -41,7 +42,7 @@ return new class extends Migration
             $table->dropForeign(['stage_id']);
             $table->dropForeign(['speaker_id']);
         });
-        
+
         Schema::dropIfExists('events');
     }
 };
