@@ -67,7 +67,7 @@
 
           <button type="button" @click="addEvent" class="btn btn-primary mt-3">Add Event</button>
           <button type="submit" class="btn btn-success mt-3">Update Stage</button>
-          <button type="button" @click="removeEvent(index)" class="btn btn-danger mt-3">Remove Event</button>
+          <button type="button" @click="removeEvent()" class="btn btn-danger mt-3">Remove Event</button>
         </form>
       </div>
     </div>
@@ -104,9 +104,9 @@ export default {
         console.error('There was a problem with the fetch operation: ', error);
       }
     },
-    removeEvent(index) {
-      this.stageToEdit.events.splice(index, 1);
-    },
+    removeEvent() {
+  this.events.pop(); 
+},
     addEvent() {
       this.stageToEdit.events.push({
         name: '',
