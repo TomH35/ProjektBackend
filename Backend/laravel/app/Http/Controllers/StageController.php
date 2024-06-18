@@ -51,6 +51,13 @@ class StageController extends Controller
                     $eventsData[$i]['image_path'] = $url;
                 }
 
+                if (isset($eventsData[$i]['is_selectable'])) {
+                    $eventsData[$i]['is_selectable'] = filter_var($eventsData[$i]['is_selectable'], FILTER_VALIDATE_BOOLEAN);
+                } else {
+
+                    $eventsData[$i]['is_selectable'] = false;
+                }
+
                 $eventsData[$i]['stage_id'] = $stage->id;
                 $eventsData[$i]['speaker_id'] = $eventsData[$i]['speaker_id'] ?? null;
                 $eventsData[$i]['capacity'] = $eventsData[$i]['capacity'] ?? 0;

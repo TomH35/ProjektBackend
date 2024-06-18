@@ -53,6 +53,11 @@
               <label :for="'eventCapacity' + index" class="form-label">Capacity:</label>
               <input :id="'eventCapacity' + index" v-model="event.capacity" type="number" class="form-control" required>
             </div>
+           
+            <div class="mb-3">
+              <label :for="'eventSelectable' + index" class="form-label">Selectable:</label>
+              <input :id="'eventSelectable' + index" type="checkbox" v-model="event.is_selectable" class="form-check-input">
+            </div>
 
             <div class="mb-3">
               <label :for="'eventImage' + index" class="form-label">Event Image:</label>
@@ -112,6 +117,8 @@ export default {
         description: '',
         image: null,
         capacity: 0,
+        is_selectable: true,
+        
       });
     },
     handleImageChange(index, event) {
@@ -129,11 +136,16 @@ export default {
               if (key === 'image' && event[key]) {
                 formData.append(`events[${index}][${key}]`, event[key]);
               } else {
-                formData.append(`events[${index}][${key}]`, event[key]);
+                if (key === 'is_selectable') {
+                  formData.append(`events[${index}][${key}]`, event[key] ? '1' : '0');
+                } else {
+                  formData.append(`events[${index}][${key}]`, event[key]);
+                }
               }
             }
           }
         });
+
 
         const response = await fetch(`./laravel/public/api/StageUpdate/${this.stageToEdit.stage.id}`, {
           method: 'POST',

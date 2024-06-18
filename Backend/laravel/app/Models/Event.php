@@ -17,6 +17,7 @@ class Event extends Model
         'link',
         'description',
         'image_path',
+        'is_selectable',
         'capacity',
     ];
 
