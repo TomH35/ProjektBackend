@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::get('/test', [TestController::class, 'test']);
 Route::get('/home', [TestController::class, 'showHome'])->name("home");
 Route::get('/delete-user/{id}', [TestController::class, 'deleteUserFromWeb'])->name("delete");
+
+Route::get('/send-test-email', [RegistrationController::class, 'sendTestEmail']);

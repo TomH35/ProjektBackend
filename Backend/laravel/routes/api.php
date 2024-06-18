@@ -11,6 +11,7 @@ use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\TestMailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,7 @@ Route::group([
     Route::post('SpeakerUpdate/{id}', [SpeakerController::class, 'updateSpeaker']);
 });
 
+Route::get('/send-test-email', [TestMailController::class, 'sendTestEmail']);
 
 
 

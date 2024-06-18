@@ -50,6 +50,11 @@
             </div>
 
             <div class="mb-3">
+              <label :for="'eventCapacity' + index" class="form-label">Capacity:</label>
+              <input :id="'eventCapacity' + index" v-model="event.capacity" type="number" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
               <label :for="'eventImage' + index" class="form-label">Event Image:</label>
               <input :id="'eventImage' + index" type="file" class="form-control" @change="handleImageChange(index, $event)">
             </div>
@@ -106,6 +111,7 @@ export default {
         link: '',
         description: '',
         image: null,
+        capacity: 0,
       });
     },
     handleImageChange(index, event) {
@@ -152,7 +158,3 @@ export default {
   },
 };
 </script>
-
-
-  
-  

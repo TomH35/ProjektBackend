@@ -24,20 +24,20 @@ class SpeakerController extends Controller
                 $path = $image->store('public/images/speakers');
                 $speakerData['image_path'] = str_replace('public/', '', $path);
             }
-    
+
             $speakerData['admin_id'] = $adminId;
-    
+
             $speakerData['short_description'] = $speakerData['shortDescription'];
             unset($speakerData['shortDescription']);
-    
+
             $speakerData['long_description'] = $speakerData['longDescription'];
             unset($speakerData['longDescription']);
-    
+
             $speakerData['social_links'] = $speakerData['socialLinks'];
             unset($speakerData['socialLinks']);
-    
+
             $speaker = Speaker::create($speakerData);
-    
+
             return response()->json(['message' => 'Speaker has been created successfully!', 'speaker' => $speaker], 201);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -48,7 +48,7 @@ class SpeakerController extends Controller
     {
         try {
             $speakers = Speaker::all();
-    
+
             foreach ($speakers as $speaker) {
                 $speaker->image_path = './laravel/storage/app/public/' . $speaker->image_path;
             }
@@ -63,7 +63,7 @@ class SpeakerController extends Controller
     {
         try {
             $speaker = Speaker::findOrFail($id);
-            
+
             $speaker->delete();
 
             return response()->json(['message' => 'Speaker has been deleted successfully!'], 200);
@@ -80,11 +80,11 @@ class SpeakerController extends Controller
         $speakerData = $request->all();
 
         if ($request->hasFile('image')) {
-           
+
             if ($speaker->image_path) {
                 Storage::delete('public/' . $speaker->image_path);
             }
-            
+
             $path = $request->file('image')->store('public/images/speakers');
             $speakerData['image_path'] = str_replace('public/', '', $path);
         }
@@ -101,6 +101,6 @@ class SpeakerController extends Controller
     }
 }
 
-    
+
 
 }
