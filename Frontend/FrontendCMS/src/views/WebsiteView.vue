@@ -15,7 +15,7 @@
         class="content-button" 
         @click="fetchContent(content.id)"
       >
-        {{ content.id === activeContentId ? 'Hide' : 'Preview Custom Website' }}
+        {{ content.id === activeContentId ? 'Hide' : 'Read more' }}
       </button>
     </div>
   </div>

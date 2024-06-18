@@ -5,7 +5,7 @@
     </div>
     <div class="button-container">
         <button class="upload-button" @click="upload_data">Upload</button>
-        <button class="redirect-button" @click="redirectToWebsiteView">Go to Website View</button>
+        <button class="redirect-button" @click="redirectToWebsiteView">Go to Blog</button>
     </div>
 </template>
 
