@@ -105,8 +105,8 @@ export default {
       }
     },
     removeEvent() {
-  this.events.pop(); 
-},
+      this.stageToEdit.events.pop();
+    },
     addEvent() {
       this.stageToEdit.events.push({
         name: '',
