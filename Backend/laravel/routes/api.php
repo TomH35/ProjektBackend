@@ -52,6 +52,7 @@ Route::get('/Speakers', [StageController::class, 'getSpeakers']);
 Route::post('/register', [RegistrationController::class, 'store']);
 Route::get('/events', [StageController::class, 'getEvents']);
 Route::get('/EventsGroupedByTime', [StageController::class, 'getEventsGroupedByTime']);
+Route::get('/SpeakerMenu', [SpeakerController::class, 'getAllSpeakers']);
 
 Route::group([
     'prefix' => 'auth'
@@ -61,7 +62,6 @@ Route::group([
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
     Route::post('SpeakerCreate', [SpeakerController::class, 'createSpeaker']);
-    Route::post('SpeakerMenu', [SpeakerController::class, 'getAllSpeakers']);
     Route::delete('SpeakerDelete/{id}', [SpeakerController::class, 'deleteSpeaker']);
     Route::post('SpeakerUpdate/{id}', [SpeakerController::class, 'updateSpeaker']);
 });

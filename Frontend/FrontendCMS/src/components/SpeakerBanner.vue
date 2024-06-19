@@ -4,7 +4,7 @@
         <h2 class="banner-title">Speakers</h2>
         <div class="speakers-list">
           <div v-for="speaker in speakers" :key="speaker.id" class="speaker">
-            <img :src="`${baseUrl}/laravel/public/storage/${speaker.image_path}`" :alt="`${speaker.name} ${speaker.surname}`" class="speaker-image">
+            <img :src="speaker.image_path" :alt="`${speaker.name} ${speaker.surname}`" class="speaker-image">
             <div class="speaker-info">
               <h3 class="speaker-name">{{ speaker.name }} {{ speaker.surname }}</h3>
               <p class="speaker-bio">{{ speaker.short_description }}</p>
@@ -22,7 +22,6 @@
   export default {
     data() {
       return {
-        baseUrl: import.meta.env.VITE_BASE_URL,
         speakers: [],
       };
     },
@@ -31,19 +30,16 @@
       this.fetchSpeakers();
     },
     methods: {
-      async fetchSpeakers() {
-        try {
-          console.log('Fetching speakers...');
-          const response = await fetch('http://localhost/laravel/public/api/Speakers');
-          const data = await response.json();
-          console.log('Fetched data:', data);
-          
-          this.speakers = data;
-          console.log('Speakers data assigned to component:', this.speakers);
-        } catch (error) {
-          console.error('Error fetching speakers:', error);
-        }
-      },
+      fetchSpeakers() {
+     
+      fetch('./laravel/public/api/SpeakerMenu', {
+        method: 'GET',
+      })
+      .then(response => response.json())
+      .then(data => {
+        this.speakers = data.speakers;
+      });
+    },
       parseSocialLinks(links) {
         return links.split(','); 
       }
