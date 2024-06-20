@@ -38,11 +38,14 @@ const router = createRouter({
       name: 'WebsiteCreateView',
       component: WebsiteCreateView
     },
+
     {
-      path: '/Blog',
-      name: 'WebsiteView',
-      component: WebsiteView
+     path: '/tab/:id',
+     name: 'WebsiteView',
+     component: WebsiteView,
+     props: true, 
     },
+
     {
       path: '/galleries',
       name: 'GalleryManager',
@@ -111,11 +114,13 @@ const router = createRouter({
       name: 'EventRegistration',
       component: () => import('../views/EventRegistrationView.vue')
     },
+
     {
       path: '/registered-users',
       name: 'RegisteredUsers',
       component: RegisteredUsers
     },
+
   ]
 })
 
