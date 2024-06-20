@@ -5,7 +5,7 @@
 
       <form @submit.prevent="submitForm" class="form">
         <div class="form-group">
-          <label for="name">Name of Sponsor:</label>
+          <label for="name">Sponsor name:</label>
           <input id="name" v-model="sponsor.name" type="text" required />
         </div>
 

@@ -70,7 +70,7 @@ export default {
           }
         });
 
-        const response = await fetch('http://localhost/laravel/public/api/galleriesCreate', {
+        const response = await fetch('../laravel/public/api/galleriesCreate', {
           method: 'POST',
           body: formData
         });
