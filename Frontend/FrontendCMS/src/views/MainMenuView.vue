@@ -24,7 +24,7 @@
         <div class="card mb-5">
           <div class="row g-0">
             <div class="col-md-4">
-              <img src="/img/trash-g0d0eff27b_1280.png" class="img-fluid rounded-start" alt="...">
+              <img src="/img/add-g273330623_1280.png" class="img-fluid rounded-start" alt="...">
             </div>
             <div class="col-md-8">
               <div class="card-body">
@@ -62,12 +62,30 @@
         <div class="card mb-5">
           <div class="row g-0">
             <div class="col-md-4">
-              <img src="/img/trash-g0d0eff27b_1280.png" class="img-fluid rounded-start" alt="...">
+              <img src="/img/add-g273330623_1280.png" class="img-fluid rounded-start" alt="...">
             </div>
             <div class="col-md-8">
               <div class="card-body">
-                <h5 class="card-title">Sponsor Manager</h5>
-                <router-link :to="{ name: 'SponsorManager' }" class="nav-link">
+                <h5 class="card-title">Gallery Manager</h5>
+                <router-link :to="{ name: 'GalleryManager' }" class="nav-link">
+                  <span class="btn custom-button-color custom-button-margin">Otvoriť</span>
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <!-- Card 5 -->
+        <div class="card mb-5">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="/img/add-g273330623_1280.png" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">About Us Manager</h5>
+                <router-link :to="{ name: 'AboutUsManager' }" class="nav-link">
                   <span class="btn custom-button-color custom-button-margin">Otvoriť</span>
                 </router-link>
               </div>
