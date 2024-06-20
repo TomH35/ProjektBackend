@@ -18,26 +18,20 @@ class RegistrationController extends Controller
             'email' => 'required|email',
         ]);
 
-        // Check for overlapping events
-        $selectedEventIds = collect($request->registrations)->pluck('event_id');
-        $events = Event::whereIn('id', $selectedEventIds)->orderBy('start_time')->get();
+        $user = User::firstOrCreate(['email' => $request->email]);
+
+        $selectedEvents = collect($request->registrations)->pluck('event_id');
+        $events = Event::whereIn('id', $selectedEvents)->orderBy('start_time')->get();
 
         if ($this->hasOverlappingEvents($events)) {
             return response()->json(['error' => 'You have selected overlapping events'], 400);
         }
 
-        // Store each registration
-        foreach ($selectedEventIds as $eventId) {
-            DB::table('registrations')->insert([
-                'event_id' => $eventId,
-                'email' => $request->email,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        foreach ($selectedEvents as $eventId) {
+            $user->events()->syncWithoutDetaching($eventId);
         }
 
-        // Send registration emails
-        $user = (object) ['email' => $request->email];
+
         $this->sendRegistrationEmails($user, $events);
 
         return response()->json(['message' => 'Registrations successful'], 201);
@@ -55,6 +49,18 @@ class RegistrationController extends Controller
         }
 
         return false;
+    }
+
+
+    public function getRegisteredUsers($eventId)
+    {
+        $users = DB::table('event_registrations')
+            ->where('event_id', $eventId)
+            ->join('users', 'event_registrations.user_id', '=', 'users.id')
+            ->select('users.email')
+            ->get();
+
+        return response()->json($users);
     }
 
     public function sendTestEmail()
