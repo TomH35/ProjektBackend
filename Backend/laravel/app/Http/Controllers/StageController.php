@@ -144,16 +144,16 @@ class StageController extends Controller
     {
         try {
             $stage = Stage::findOrFail($id);
-            // Get all event IDs associated with the stage
+
             $eventIds = $stage->events()->pluck('id');
 
-            // Delete all registrations associated with these events
+
             DB::table('registrations')->whereIn('event_id', $eventIds)->delete();
 
-            // Delete the events associated with the stage
+
             Event::whereIn('id', $eventIds)->delete();
 
-            // Finally, delete the stage
+
             $stage->delete();
 
             return response()->json(null, 204);

@@ -38,6 +38,8 @@ Route::post('/SponsorUpdate/{id}', [SponsorController::class, 'updateSponsor']);
 Route::delete('/SponsorDelete/{id}', [SponsorController::class, 'deleteSponsor']);
 Route::post('/editorPost', [EditorController::class, 'store']);
 Route::get('/editorPost/{id?}', [EditorController::class, 'show']);
+Route::delete('editorDelete/{id}', [EditorController::class, 'editorDelete']);
+
 Route::post('/test-post', [TestController::class, 'testPost']);
 Route::post('/AdminRegistration', [AuthController::class, 'AdminRegistration']);
 Route::post('/galleriesCreate', [GalleryController::class, 'createGallery']);

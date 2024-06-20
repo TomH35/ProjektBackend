@@ -39,6 +39,9 @@ export default {
       },
     };
   },
+  created() {
+    this.fetchEditorPosts();
+  },
   methods: {
     handleClick(page) {
       if (page === 'Logout') {
@@ -60,6 +63,23 @@ export default {
             console.error('Error:', error);
           });
       }
+    },
+    fetchEditorPosts() {
+      fetch('../laravel/public/api/editorPost')
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.content) {
+            data.content.forEach(editorPost => {
+              if (editorPost.location === 'both' || editorPost.location === 'navbar') {
+              this.headerMenu[editorPost.name] = `/tab/${editorPost.id}`;
+            }
+          
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching editor posts:', error);
+        });
     },
   },
 };
