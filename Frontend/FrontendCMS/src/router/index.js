@@ -13,6 +13,7 @@ import AboutUsManagerView from '@/views/AboutUsManagerView.vue'
 import AboutUsCreate from '@/components/AboutUsCreate.vue'
 import AboutUsEdit from '@/components/AboutUsEdit.vue'
 import HomePageView from '@/views/HomePageView.vue'
+import RegisteredUsers from '@/components/RegisteredUsers.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,12 +39,12 @@ const router = createRouter({
       component: WebsiteCreateView
     },
 
-{
-  path: '/tab/:id',
-  name: 'WebsiteView',
-  component: WebsiteView,
-  props: true, 
-},
+    {
+     path: '/tab/:id',
+     name: 'WebsiteView',
+     component: WebsiteView,
+     props: true, 
+    },
 
     {
       path: '/galleries',
@@ -88,7 +89,6 @@ const router = createRouter({
       component: AboutUsEdit,
       props: true,
     },
-
     {
       path: '/',
       name: 'HomePageView',
@@ -115,11 +115,11 @@ const router = createRouter({
       component: () => import('../views/EventRegistrationView.vue')
     },
 
-    
-
-
-
-
+    {
+      path: '/registered-users',
+      name: 'RegisteredUsers',
+      component: RegisteredUsers
+    },
 
   ]
 })
