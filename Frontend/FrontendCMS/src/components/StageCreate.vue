@@ -33,7 +33,8 @@
 
             <div class="mb-3">
               <label :for="'eventSpeaker' + index" class="form-label">Speaker:</label>
-              <select :id="'eventSpeaker' + index" v-model="event.speaker_id" class="form-control" required>
+              <select :id="'eventSpeaker' + index" v-model="event.speaker_id" class="form-control">
+                <option value="">None</option>
                 <option v-for="speaker in speakers" :key="speaker.id" :value="speaker.id">{{ speaker.name }} {{ speaker.surname }}</option>
               </select>
             </div>
@@ -95,7 +96,7 @@ export default {
           description: '',
           image: null,
           capacity: 0,
-          is_selectable: true, 
+          is_selectable: true,
         },
       ],
       speakers: [],
@@ -117,9 +118,8 @@ export default {
       }
     },
     removeEvent() {
-  this.events.pop(); 
-}
-,
+      this.events.pop();
+    },
     addEvent() {
       this.events.push({
         name: '',
@@ -129,7 +129,7 @@ export default {
         link: '',
         description: '',
         image: null,
-        capacity: 0, 
+        capacity: 0,
         is_selectable: true,
       });
     },
@@ -154,7 +154,7 @@ export default {
               if (key === 'image' && event[key]) {
                 formData.append(`events[${index}][${key}]`, event[key]);
               } else {
-                formData.append(`events[${index}][${key}]`, event[key]);
+                formData.append(`events[${index}][${key}]`, event[key] ?? '');
               }
             }
           }
@@ -183,4 +183,5 @@ export default {
     },
   },
 };
+
 </script>
