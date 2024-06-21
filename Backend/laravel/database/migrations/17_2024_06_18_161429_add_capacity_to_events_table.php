@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,11 +12,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('editor', function (Blueprint $table) {
-            $table->id();
-            $table->text('content');
-            $table->string('location')->nullable();
-            $table->timestamps();
+        Schema::table('events', function (Blueprint $table) {
+            $table->integer('capacity')->default(0); // Adding capacity column with a default value
         });
     }
 
@@ -28,6 +24,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('editor');
+        Schema::table('events', function (Blueprint $table) {
+            $table->dropColumn('capacity');
+        });
     }
 };
+

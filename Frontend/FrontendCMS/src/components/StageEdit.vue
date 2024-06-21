@@ -50,6 +50,15 @@
             </div>
 
             <div class="mb-3">
+              <label :for="'eventCapacity' + index" class="form-label">Capacity:</label>
+              <input :id="'eventCapacity' + index" v-model="event.capacity" type="number" class="form-control" required>
+            </div>
+            
+            <label :for="'eventSelectable' + index" class="form-label">Selectable:</label>
+            <input :id="'eventSelectable' + index" type="checkbox" :checked="event.is_selectable" @change="event.is_selectable = $event.target.checked" class="form-check-input">
+
+
+            <div class="mb-3">
               <label :for="'eventImage' + index" class="form-label">Event Image:</label>
               <input :id="'eventImage' + index" type="file" class="form-control" @change="handleImageChange(index, $event)">
             </div>
@@ -57,6 +66,7 @@
 
           <button type="button" @click="addEvent" class="btn btn-primary mt-3">Add Event</button>
           <button type="submit" class="btn btn-success mt-3">Update Stage</button>
+          <button type="button" @click="removeEvent()" class="btn btn-danger mt-3">Remove Event</button>
         </form>
       </div>
     </div>
@@ -81,6 +91,8 @@ export default {
   created() {
     this.fetchSpeakers();
   },
+
+  
   methods: {
     async fetchSpeakers() {
       try {
@@ -93,8 +105,8 @@ export default {
         console.error('There was a problem with the fetch operation: ', error);
       }
     },
-    removeEvent(index) {
-      this.stageToEdit.events.splice(index, 1);
+    removeEvent() {
+      this.stageToEdit.events.pop();
     },
     addEvent() {
       this.stageToEdit.events.push({
@@ -105,6 +117,9 @@ export default {
         link: '',
         description: '',
         image: null,
+        capacity: 0,
+        is_selectable: true,
+        
       });
     },
     handleImageChange(index, event) {
@@ -122,11 +137,16 @@ export default {
               if (key === 'image' && event[key]) {
                 formData.append(`events[${index}][${key}]`, event[key]);
               } else {
-                formData.append(`events[${index}][${key}]`, event[key]);
+                if (key === 'is_selectable') {
+                  formData.append(`events[${index}][${key}]`, event[key] ? '1' : '0');
+                } else {
+                  formData.append(`events[${index}][${key}]`, event[key]);
+                }
               }
             }
           }
         });
+
 
         const response = await fetch(`./laravel/public/api/StageUpdate/${this.stageToEdit.stage.id}`, {
           method: 'POST',
@@ -142,6 +162,7 @@ export default {
           this.successMessage = 'Stage has been updated successfully!';
           alert(this.successMessage);
           this.errorMessage = '';
+          this.$emit('stageUpdated');
         }
       } catch (error) {
         this.successMessage = '';
@@ -151,7 +172,3 @@ export default {
   },
 };
 </script>
-
-
-  
-  

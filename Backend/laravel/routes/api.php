@@ -11,6 +11,7 @@ use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\TestMailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +33,13 @@ Route::get('/StageRead', [StageController::class, 'readStage']);
 Route::post('/StageUpdate/{id}', [StageController::class, 'updateStage']);
 Route::delete('/StageDelete/{id}', [StageController::class, 'deleteStage']);
 Route::post('/SponsorCreate', [SponsorController::class, 'createSponsor']);
-Route::post('/SponsorRead', [SponsorController::class, 'readSponsor']);
+Route::get('/SponsorRead', [SponsorController::class, 'readSponsor']);
+Route::post('/SponsorUpdate/{id}', [SponsorController::class, 'updateSponsor']);
+Route::delete('/SponsorDelete/{id}', [SponsorController::class, 'deleteSponsor']);
 Route::post('/editorPost', [EditorController::class, 'store']);
 Route::get('/editorPost/{id?}', [EditorController::class, 'show']);
+Route::delete('editorDelete/{id}', [EditorController::class, 'editorDelete']);
+
 Route::post('/test-post', [TestController::class, 'testPost']);
 Route::post('/AdminRegistration', [AuthController::class, 'AdminRegistration']);
 Route::post('/galleriesCreate', [GalleryController::class, 'createGallery']);
@@ -49,8 +54,10 @@ Route::post('/about_us/{id}', [AboutUsController::class, 'update']);
 Route::delete('/about_us/{id}', [AboutUsController::class, 'destroy']);
 Route::get('/Speakers', [StageController::class, 'getSpeakers']);
 Route::post('/register', [RegistrationController::class, 'store']);
+Route::get('registrations/{eventId}', [RegistrationController::class, 'getRegisteredUsers']);
 Route::get('/events', [StageController::class, 'getEvents']);
 Route::get('/EventsGroupedByTime', [StageController::class, 'getEventsGroupedByTime']);
+Route::get('/SpeakerMenu', [SpeakerController::class, 'getAllSpeakers']);
 
 Route::group([
     'prefix' => 'auth'
@@ -60,11 +67,11 @@ Route::group([
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
     Route::post('SpeakerCreate', [SpeakerController::class, 'createSpeaker']);
-    Route::post('SpeakerMenu', [SpeakerController::class, 'getAllSpeakers']);
     Route::delete('SpeakerDelete/{id}', [SpeakerController::class, 'deleteSpeaker']);
     Route::post('SpeakerUpdate/{id}', [SpeakerController::class, 'updateSpeaker']);
 });
 
+Route::get('/send-test-email', [TestMailController::class, 'sendTestEmail']);
 
 
 

@@ -83,11 +83,8 @@ export default {
       const loginStore = useLoginStore();
       const token = loginStore.getToken;
 
-      fetch('./laravel/public/api/auth/SpeakerMenu', {
-        method: 'POST',
-        headers: {
-          'Authorization': `bearer ${token}`,
-        },
+      fetch('./laravel/public/api/SpeakerMenu', {
+        method: 'GET',
       })
       .then(response => response.json())
       .then(data => {

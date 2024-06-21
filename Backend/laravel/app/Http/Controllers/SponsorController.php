@@ -39,7 +39,56 @@ class SponsorController extends Controller
             return Response::json(['error' => 'An error occurred while creating the sponsor'], 500);
         }
     }
+    public function deleteSponsor($id)
+    {
+        try {
+            $sponsor = Sponsor::findOrFail($id);
+            if ($sponsor->image_path) {
+                $imagePath = str_replace('/storage', 'public', $sponsor->image_path);
+                Storage::delete($imagePath);
+            }
+            $sponsor->delete();
 
+            return response()->json(['message' => 'Sponsor deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while deleting the sponsor'], 500);
+        }
+    }
+
+    public function updateSponsor(Request $request, $id)
+    {
+        $sponsorData = json_decode($request->get('sponsor'), true);
+
+        DB::beginTransaction();
+
+        try {
+            $sponsor = Sponsor::findOrFail($id);
+
+            if ($request->hasFile('image')) {
+    
+                if ($sponsor->image_path) {
+                    $imagePath = str_replace('/storage', 'public', $sponsor->image_path);
+                    Storage::delete($imagePath);
+                }
+
+         
+                $file = $request->file('image');
+                $path = Storage::putFile('public/images/sponsors', $file);
+                $url = Storage::url($path);
+                $sponsorData['image_path'] = $url;
+            }
+
+            $sponsor->update($sponsorData);
+
+            DB::commit();
+
+            return Response::json($sponsor);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return Response::json(['error' => 'An error occurred while updating the sponsor'], 500);
+        }
+    }
     public function readSponsor()
     {
         $sponsors = Sponsor::all();
