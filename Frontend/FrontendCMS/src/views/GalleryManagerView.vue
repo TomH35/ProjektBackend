@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container custom-container">
     <h1>Gallery Manager</h1>
     <router-link to="/galleries/create">Create Gallery</router-link>
     <div v-if="galleries.length === 0">

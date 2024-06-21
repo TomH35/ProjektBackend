@@ -179,17 +179,23 @@ class StageController extends Controller
 
     public function getEventsGroupedByTime()
     {
-        $events = Event::orderBy('start_time')->get();
-        $groupedEvents = [];
+    $events = Event::where('is_selectable', true)
+        ->whereColumn('registration_count', '<', 'capacity')
+        ->orderBy('start_time')
+        ->get();
 
-        foreach ($events as $event) {
-            $timeWindow = $event->start_time . ' - ' . $event->end_time;
-            if (!isset($groupedEvents[$timeWindow])) {
-                $groupedEvents[$timeWindow] = [];
-            }
-            $groupedEvents[$timeWindow][] = $event;
+    $groupedEvents = [];
+
+    foreach ($events as $event) {
+        $timeWindow = $event->start_time . ' - ' . $event->end_time;
+        if (!isset($groupedEvents[$timeWindow])) {
+            $groupedEvents[$timeWindow] = [];
         }
-
-        return response()->json($groupedEvents);
+        $groupedEvents[$timeWindow][] = $event;
     }
+
+    return response()->json($groupedEvents);
+    }
+
+
 }
