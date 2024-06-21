@@ -12,30 +12,38 @@ class RegistrationController extends Controller
 {
     public function store(Request $request)
     {
-        $request->validate([
-            'registrations' => 'required|array',
-            'registrations.*.event_id' => 'required|exists:events,id',
-            'email' => 'required|email',
-        ]);
+    $request->validate([
+        'registrations' => 'required|array',
+        'registrations.*.event_id' => 'required|exists:events,id',
+        'email' => 'required|email',
+    ]);
 
-        $user = User::firstOrCreate(['email' => $request->email]);
+    $user = User::firstOrCreate(['email' => $request->email]);
 
-        $selectedEvents = collect($request->registrations)->pluck('event_id');
-        $events = Event::whereIn('id', $selectedEvents)->orderBy('start_time')->get();
+    $selectedEvents = collect($request->registrations)->pluck('event_id');
+    $events = Event::whereIn('id', $selectedEvents)->orderBy('start_time')->get();
 
-        if ($this->hasOverlappingEvents($events)) {
-            return response()->json(['error' => 'You have selected overlapping events'], 400);
-        }
-
-        foreach ($selectedEvents as $eventId) {
-            $user->events()->syncWithoutDetaching($eventId);
-        }
-
-
-        $this->sendRegistrationEmails($user, $events);
-
-        return response()->json(['message' => 'Registrations successful'], 201);
+    if ($this->hasOverlappingEvents($events)) {
+        return response()->json(['error' => 'You have selected overlapping events'], 400);
     }
+
+    foreach ($selectedEvents as $eventId) {
+        $event = Event::find($eventId);
+
+        if ($event->registration_count >= $event->capacity) {
+            return response()->json(['error' => 'Event capacity exceeded for event ID ' . $eventId], 400);
+        }
+
+        $user->events()->syncWithoutDetaching($eventId);
+
+        $event->increment('registration_count');
+    }
+
+    $this->sendRegistrationEmails($user, $events);
+
+    return response()->json(['message' => 'Registrations successful'], 201);
+    }
+
 
     private function hasOverlappingEvents($events)
     {

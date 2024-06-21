@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('image_path')->nullable();
             $table->boolean('is_selectable')->default(true);
+            $table->integer('registration_count')->default(0); 
             $table->timestamps();
 
             $table->foreign('stage_id')->references('id')->on('stages')->onDelete('cascade');
