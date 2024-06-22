@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       headerMenu: {
-        "DOMOV": "/home",
+        "DOMOV": "/",
         "SPEAKERS": "/speakers",
         "PROGRAM": "/program",
         "PARTNERI": "/partneri",

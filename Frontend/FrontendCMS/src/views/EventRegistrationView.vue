@@ -1,5 +1,5 @@
 <template>
-    <div class="container custom-container">
+    <div class="container">
       <div class="row">
       <h1 class="text-center"><strong>Registrácia</strong></h1>
       <EventRegistrationForm />

@@ -20,9 +20,6 @@ import StageView from '@/views/StageView.vue'
 import ContactView from '@/views/ContactView.vue'
 import { useLoginStore } from '../stores/loginStore'
 
-
-
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -125,7 +122,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/home',
+      path: '/',
       name: 'HomePageView',
       component: HomePageView,
     },
