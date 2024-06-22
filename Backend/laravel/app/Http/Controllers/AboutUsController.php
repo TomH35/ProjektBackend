@@ -14,8 +14,20 @@ class AboutUsController extends Controller
 
     public function show($id)
     {
-        return AboutUs::find($id);
+        $aboutUs = AboutUs::find($id);
+
+        if (!$aboutUs) {
+            return response()->json(['error' => 'Entry not found'], 404);
+        }
+
+        if ($aboutUs && $aboutUs->image_path) {
+            $aboutUs->image_path = asset('storage/' . $aboutUs->image_path);
+        }
+
+        return response()->json($aboutUs);
     }
+
+
 
     public function store(Request $request)
     {
@@ -37,6 +49,7 @@ class AboutUsController extends Controller
 
         return response()->json($aboutUs, 201);
     }
+
 
     public function update(Request $request, $id)
     {

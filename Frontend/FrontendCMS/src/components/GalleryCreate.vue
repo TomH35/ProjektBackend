@@ -14,10 +14,12 @@
           </div>
           <div v-for="(image, index) in gallery.images" :key="index" class="mb-3">
             <label :for="'image' + (index + 1)" class="form-label">Image {{ index + 1 }}:</label>
-            <input :id="'image' + (index + 1)" type="file" class="form-control" @change="handleImageChange(index)">
+            <input :id="'image' + (index + 1)" type="file" class="form-control" @change="handleImageChange(index, $event)">
+            <img v-if="previewImages[index]" :src="previewImages[index]" alt="Image Preview" class="img-preview">
           </div>
-          <button type="button" class="btn btn-danger mt-3" @click="removeImage(index)">Remove</button>
           <button type="button" class="btn btn-secondary mt-3" @click="addImageInput">Add Another Image</button>
+          <button type="button" class="btn btn-danger mt-3" @click="removeImage(index)">Remove</button>
+
           <button type="submit" class="btn btn-success mt-3">Create Gallery</button>
         </form>
       </div>
@@ -38,25 +40,25 @@ export default {
     };
   },
   methods: {
-    handleImageChange(index) {
-      return (event) => {
-        const file = event.target.files[0];
-        if (file) {
-          this.gallery.images[index] = file;
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.$set(this.previewImages, index, e.target.result);
-          };
-          reader.readAsDataURL(file);
-        }
-      };
+    handleImageChange(index, event) {
+      const file = event.target.files[0];
+      if (file) {
+        this.gallery.images[index] = file;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.previewImages[index] = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
     },
     addImageInput() {
       this.gallery.images.push(null);
+      this.previewImages.push(null);
     },
     removeImage(index) {
       this.gallery.images.splice(index, 1);
       this.previewImages.splice(index, 1);
+      this.previewImages.push(null);
     },
     async createGallery() {
       try {
@@ -98,6 +100,8 @@ export default {
   display: flex;
   align-items: center;
   margin-top: 10px;
+  max-width: 200px;
+  max-height: 200px;
 }
 
 .img-preview img {

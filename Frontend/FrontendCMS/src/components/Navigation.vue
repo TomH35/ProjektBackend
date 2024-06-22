@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark fixed-top custom-background">
+  <nav class="navbar navbar-expand-sm navbar-dark fixed-top ">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <img src="@/assets/logo.png" alt="nCONNECT24" class="banner-logo">
@@ -84,18 +84,18 @@ export default {
 
 <style scoped>
 .navbar {
-  background-color: #004d60; /* Adjust as necessary */
+  background-color: #656E77; 
 }
 
 .custom-navbar-color {
-  color: white; /* Adjust as necessary */
+  color: #DDDBDE; 
 }
 
 .custom-navbar-top-color {
-  color: #ffcc00; /* Adjust as necessary */
+  color: #ffcc00; 
 }
 
 .nav-link:hover {
-  background-color: #003e4f; /* Adjust as necessary */
+  background-color: #003e4f; 
 }
 </style>
