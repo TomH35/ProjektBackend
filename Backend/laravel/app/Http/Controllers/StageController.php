@@ -39,7 +39,7 @@ class StageController extends Controller
             });
 
             for ($i = 0; $i < count($eventsData); $i++) {
-                if ($i > 0 && $eventsData[$i]['start_time'] <= $eventsData[$i - 1]['end_time']) {
+                if ($i > 0 && $eventsData[$i]['start_time'] < $eventsData[$i - 1]['end_time']) {
                     DB::rollBack();
                     return Response::json(['error' => 'Event times are overlapping'], 400);
                 }
@@ -110,7 +110,7 @@ class StageController extends Controller
             });
 
             for ($i = 0; $i < count($eventsData); $i++) {
-                if ($i > 0 && $eventsData[$i]['start_time'] <= $eventsData[$i - 1]['end_time']) {
+                if ($i > 0 && $eventsData[$i]['start_time'] < $eventsData[$i - 1]['end_time']) {
                     DB::rollBack();
                     return Response::json(['error' => 'Event times are overlapping'], 400);
                 }
