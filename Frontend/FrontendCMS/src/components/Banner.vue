@@ -10,7 +10,7 @@
             <button @click="goToSpeakers" class="btn btn-outline-light">SPEAKERS</button>
             <button @click="goToRegistration" class="btn btn-outline-light">REGISTRÁCIA</button>
           </div>
-          <!--<img src="@/assets/logo.png" alt="nCONNECT24" class="banner-logo">-->
+          
         </div>
       </div>
     </div>
@@ -25,11 +25,11 @@
         bannerStyle: {
           background: `url(${bannerBackground}) no-repeat center center`,
           backgroundSize: 'cover',
-          height: '60vh', /* Adjusted height */
+          height: '60vh', 
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: 'white', /* Change text color to white */
+          color: 'white', 
           textAlign: 'center',
         },
       };
@@ -57,20 +57,20 @@
     position: relative;
   }
   .banner-date {
-    font-size: 0.8em; /* Smaller font size */
+    font-size: 0.8em; 
     margin-bottom: 0.5em;
-    color: white; /* Ensure text color is white */
+    color: white; 
   }
   .banner-title {
-    font-size: 1.5em; /* Smaller font size */
+    font-size: 1.5em; 
     margin-bottom: 0.5em;
-    color: white; /* Ensure text color is white */
+    color: white; 
   }
   .banner-subtitle {
-    font-size: 2em; /* Smaller font size */
+    font-size: 2em; 
     margin-bottom: 1em;
     font-weight: bold;
-    color: white; /* Ensure text color is white */
+    color: white; 
   }
   .banner-buttons {
     margin-top: 1em;
@@ -82,7 +82,7 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 100px; /* Adjusted size */
+    width: 100px; 
     height: auto;
   }
   </style>

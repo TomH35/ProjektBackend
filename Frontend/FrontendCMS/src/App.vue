@@ -39,7 +39,7 @@ html, body, #app {
 }
 
 footer {
-  background-color: #004d60; /* Adjust as necessary */
+  background-color: #DDDBDE; /* Adjust as necessary */
   color: white;
   text-align: center;
   padding: 1rem 0;
