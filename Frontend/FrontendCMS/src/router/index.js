@@ -14,6 +14,13 @@ import AboutUsCreate from '@/components/AboutUsCreate.vue'
 import AboutUsEdit from '@/components/AboutUsEdit.vue'
 import HomePageView from '@/views/HomePageView.vue'
 import RegisteredUsers from '@/components/RegisteredUsers.vue'
+import SpeakersView from '@/views/SpeakersView.vue'
+import SponsorView from '@/views/SponsorView.vue'
+import StageView from '@/views/StageView.vue'
+import ContactView from '@/views/ContactView.vue'
+
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -90,10 +97,30 @@ const router = createRouter({
       props: true,
     },
     {
-      path: '/',
+      path: '/home',
       name: 'HomePageView',
       component: HomePageView,
     },
+    {
+    path: '/speakers',
+    name: 'SpeakersView',
+    component: SpeakersView,
+    },
+    {
+      path: '/partneri',
+      name: 'SponsorView',
+      component: SponsorView,
+      },
+      {
+        path: '/program',
+        name: 'StageView',
+        component: StageView,
+        },
+        {
+          path: '/kontakt',
+          name: 'ContactView',
+          component: ContactView,
+          },
     {
       path: '/main-menu',
       name: 'MainMenu',
@@ -120,6 +147,7 @@ const router = createRouter({
       name: 'RegisteredUsers',
       component: RegisteredUsers
     },
+
 
   ]
 })

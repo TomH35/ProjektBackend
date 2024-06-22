@@ -7,43 +7,43 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegistrationSuccessful;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class RegistrationController extends Controller
 {
     public function store(Request $request)
     {
-    $request->validate([
-        'registrations' => 'required|array',
-        'registrations.*.event_id' => 'required|exists:events,id',
-        'email' => 'required|email',
-    ]);
+        $request->validate([
+            'registrations' => 'required|array',
+            'registrations.*.event_id' => 'required|exists:events,id',
+            'email' => 'required|email',
+        ]);
 
-    $user = User::firstOrCreate(['email' => $request->email]);
+        $user = User::firstOrCreate(['email' => $request->email]);
 
-    $selectedEvents = collect($request->registrations)->pluck('event_id');
-    $events = Event::whereIn('id', $selectedEvents)->orderBy('start_time')->get();
+        $selectedEvents = collect($request->registrations)->pluck('event_id');
+        $events = Event::whereIn('id', $selectedEvents)->orderBy('start_time')->get();
 
-    if ($this->hasOverlappingEvents($events)) {
-        return response()->json(['error' => 'You have selected overlapping events'], 400);
-    }
-
-    foreach ($selectedEvents as $eventId) {
-        $event = Event::find($eventId);
-
-        if ($event->registration_count >= $event->capacity) {
-            return response()->json(['error' => 'Event capacity exceeded for event ID ' . $eventId], 400);
+        if ($this->hasOverlappingEvents($events)) {
+            return response()->json(['error' => 'You have selected overlapping events'], 400);
         }
 
-        $user->events()->syncWithoutDetaching($eventId);
+        foreach ($selectedEvents as $eventId) {
+            $event = Event::find($eventId);
 
-        $event->increment('registration_count');
+            if ($event->registration_count >= $event->capacity) {
+                return response()->json(['error' => 'Event capacity exceeded for event ID ' . $eventId], 400);
+            }
+
+            $user->events()->syncWithoutDetaching($eventId);
+
+            $event->increment('registration_count');
+        }
+
+        $this->sendRegistrationEmails($user, $events);
+
+        return response()->json(['message' => 'Registrations successful'], 201);
     }
-
-    $this->sendRegistrationEmails($user, $events);
-
-    return response()->json(['message' => 'Registrations successful'], 201);
-    }
-
 
     private function hasOverlappingEvents($events)
     {
@@ -58,7 +58,6 @@ class RegistrationController extends Controller
 
         return false;
     }
-
 
     public function getRegisteredUsers($eventId)
     {
@@ -90,5 +89,56 @@ class RegistrationController extends Controller
 
         Mail::to($user->email)->send(new RegistrationSuccessful($user, $events));
         Mail::to($adminEmail)->send(new RegistrationSuccessful($user, $events));
+    }
+
+    public function showCancelRegistrationForm(Request $request)
+    {
+        $token = $request->query('token');
+        $tokenData = DB::table('registration_tokens')->where('token', $token)->first();
+
+        if (!$tokenData || Carbon::now()->greaterThan($tokenData->expires_at)) {
+            return response()->json(['error' => 'Invalid or expired token'], 400);
+        }
+
+        return view('emails.cancel-registration', ['token' => $token]);
+    }
+
+    public function cancelRegistration(Request $request)
+    {
+        $request->validate([
+            'token' => 'required|string',
+        ]);
+
+        $token = $request->input('token');
+        $tokenData = DB::table('registration_tokens')->where('token', $token)->first();
+
+        if (!$tokenData || Carbon::now()->greaterThan($tokenData->expires_at)) {
+            return response()->json(['error' => 'Invalid or expired token'], 400);
+        }
+
+        $user = User::where('email', $tokenData->email)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        // Get all events the user is registered for
+        $events = DB::table('event_registrations')->where('user_id', $user->id)->get();
+
+        // Remove the user from the events
+        DB::table('event_registrations')->where('user_id', $user->id)->delete();
+
+        // Decrement the registration count for each event
+        foreach ($events as $event) {
+            Event::where('id', $event->event_id)->decrement('registration_count');
+        }
+
+        // Delete the user
+        $user->delete();
+
+        // Delete the token
+        DB::table('registration_tokens')->where('token', $token)->delete();
+
+        return response()->json(['message' => 'Registration cancelled successfully'], 200);
     }
 }
