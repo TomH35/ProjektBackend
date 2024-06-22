@@ -160,4 +160,13 @@ const router = createRouter({
   }
 })
 
+router.beforeEach((to, from, next) => {
+  const store = useLoginStore();
+  if (to.matched.some(record => record.meta.requiresAuth) && !store.userAuthorised) {
+    next({ name: 'home' });
+  } else {
+    next();
+  }
+});
+
 export default router

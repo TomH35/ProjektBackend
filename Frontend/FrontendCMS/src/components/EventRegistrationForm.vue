@@ -1,20 +1,19 @@
 <template>
-  <div>
-    <h1>Register for Events</h1>
+  <div class="container mt-5">
     <form @submit.prevent="register">
-      <div v-for="(events, timeWindow) in groupedEvents" :key="timeWindow">
-        <label :for="timeWindow">{{ timeWindow }}:</label>
-        <select v-model="form.registrations[timeWindow]" required>
+      <div v-for="(events, timeWindow) in groupedEvents" :key="timeWindow" class="mb-3">
+        <label :for="timeWindow" class="form-label">{{ timeWindow }}:</label>
+        <select v-model="form.registrations[timeWindow]" class="form-select" required>
           <option :value="null">Select an event</option>
           <option v-for="event in events" :key="event.id" :value="event.id">{{ event.name }}</option>
         </select>
       </div>
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" v-model="form.email" required />
+      <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" v-model="form.email" class="form-control" required />
       </div>
-      <button type="submit">Register</button>
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      <button type="submit" class="btn btn-primary">Register</button>
+      <p v-if="errorMessage" class="text-danger mt-3">{{ errorMessage }}</p>
     </form>
   </div>
 </template>
@@ -80,6 +79,9 @@ export default {
 </script>
 
 <style>
+.container {
+  max-width: 600px;
+}
 .error-message {
   color: red;
   font-weight: bold;

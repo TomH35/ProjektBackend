@@ -16,22 +16,29 @@ class AuthController extends Controller
 
     public function AdminRegistration(Request $request)
     {
-        $validatedData = $request->validate([
-            'meno' => 'required|max:255',
-            'priezvisko' => 'required|max:255',
-            'email' => 'required|email|max:70|unique:admins',
-            'password' => 'required',
-        ]);
+    $validatedData = $request->validate([
+        'meno' => 'required|max:255',
+        'priezvisko' => 'required|max:255',
+        'email' => 'required|email|max:70|unique:admins',
+        'password' => [
+            'required',
+            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,16}$/'
+        ],
+    ], [
+        'password.regex' => 'Password must be 8-16 characters long, contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol.'
+    ]);
 
-        $admin = new Admin;
-        $admin->meno = $validatedData['meno'];
-        $admin->priezvisko = $validatedData['priezvisko'];
-        $admin->email = $validatedData['email'];
-        $admin->password = Hash::make($validatedData['password']);
-        $admin->save();
+    $admin = new Admin;
+    $admin->meno = $validatedData['meno'];
+    $admin->priezvisko = $validatedData['priezvisko'];
+    $admin->email = $validatedData['email'];
+    $admin->password = Hash::make($validatedData['password']);
+    $admin->save();
 
-        return response()->json(['message' => 'Admin registered successfully'], 201);
+    return response()->json(['message' => 'Admin registered successfully'], 201);
     }
+
+    
 
     public function login()
     {

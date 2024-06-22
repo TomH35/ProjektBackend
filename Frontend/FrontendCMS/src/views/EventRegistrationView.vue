@@ -1,7 +1,9 @@
 <template>
     <div class="container custom-container">
-      <h1 class="text-center custom-margin-bottom"><strong>Conference Registration</strong></h1>
+      <div class="row">
+      <h1 class="text-center"><strong>Registrácia</strong></h1>
       <EventRegistrationForm />
+    </div>
     </div>
 
 

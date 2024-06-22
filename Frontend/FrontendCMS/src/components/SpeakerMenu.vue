@@ -1,14 +1,16 @@
 <template>
-  <div class="row">
+ <div class="row">
     <div class="col-md-4" v-for="speaker in speakers" :key="speaker.id">
       <div class="card mb-4">
         <img :src="speaker.image_path" class="card-img-top" alt="Speaker image">
         <div class="card-body">
           <h5 class="card-title">{{ speaker.name }} {{ speaker.surname }}</h5>
           <p class="card-text">{{ speaker.short_description }}</p>
-          <button class="btn btn-primary" @click="showLongDescription(speaker)">Read more</button>
-          <button class="btn btn-danger" @click="deleteSpeaker(speaker.id)">Delete</button>
-          <button class="btn btn-warning" @click="editSpeaker(speaker)">Update</button>
+          <div>
+            <button class="btn btn-primary me-2" @click="showLongDescription(speaker)">Read more</button>
+            <button class="btn btn-danger me-2" @click="deleteSpeaker(speaker.id)">Delete</button>
+            <button class="btn btn-warning" @click="editSpeaker(speaker)">Update</button>
+          </div>
         </div>
       </div>
     </div>
@@ -55,6 +57,24 @@
       </div>
     </div>
 
+    <!-- Modal for showing long description -->
+    <div class="modal fade" id="longDescriptionModal" tabindex="-1" aria-labelledby="longDescriptionModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="longDescriptionModalLabel">Long Description</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>{{ currentSpeaker.long_description }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -75,7 +95,8 @@ export default {
         image: null
       },
       newImage: null,
-      editSpeakerModal: null, // Add this line
+      editSpeakerModal: null,
+      longDescriptionModal: null // Add this line
     };
   },
   methods: {
@@ -92,7 +113,9 @@ export default {
       });
     },
     showLongDescription(speaker) {
-      alert(speaker.long_description);
+      this.currentSpeaker = { ...speaker };
+      this.longDescriptionModal = new window.bootstrap.Modal(document.getElementById('longDescriptionModal'));
+      this.longDescriptionModal.show();
     },
     async deleteSpeaker(speakerId) {
       try {
@@ -168,6 +191,7 @@ export default {
   },
 };
 </script>
+
 
 
 

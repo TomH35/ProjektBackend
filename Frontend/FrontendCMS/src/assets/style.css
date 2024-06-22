@@ -29,9 +29,13 @@
     background-repeat: no-repeat;
 }*/
 .custom-container {
-    margin-top: 110px; /* Adjust the value as needed */
+    margin-top: 100px; /* Adjust the value as needed */
     margin-bottom: 50px;
   }
+.another-custom-container {
+    margin-top: 150px; /* Adjust the value as needed */
+    margin-bottom: 50px;
+}
 .custom-img-margin{
     margin-left: 110px;
 }

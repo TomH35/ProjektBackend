@@ -1,5 +1,5 @@
 <template>
-    <div class="container custom-container">
+    <div class="container another-custom-container">
       <h1 class="text-center custom-margin-bottom"><strong>Speaker Manager</strong></h1>
       <SpeakerCreate />
       <div class="custom-container">

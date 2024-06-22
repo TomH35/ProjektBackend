@@ -4,7 +4,7 @@
       <div class="card w-50">
         <div class="card-body">
           <h5 class="card-title text-center">Prihlásiť sa</h5>
-          <Form @logIn="adminLogin"></Form>
+          <Form @logIn="adminLogin" :errorMessage="errorMessage"></Form>
         </div>
       </div>
     </div>
@@ -20,39 +20,56 @@ export default {
   components: {
     Form,
   },
-  setup() {
-    const loginStore = useLoginStore();
-    const router = useRouter();
-
-    const adminLogin = async (email, password) => {
-      const response = await fetch('./laravel/public/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      loginStore.setToken(data.access_token, data.admin_id);
-      console.log(loginStore.token);
-      router.push('/main-menu');
-    };
-
+  data() {
     return {
-      adminLogin,
+      errorMessage: ''
     };
   },
+  methods: {
+    async adminLogin(email, password) {
+      this.errorMessage = '';
+
+      try {
+        const response = await fetch('./laravel/public/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password
+          })
+        });
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            this.errorMessage = 'The entered email or password is incorrect';
+          } else {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return;
+        }
+
+        const data = await response.json();
+        const loginStore = useLoginStore();
+        loginStore.setToken(data.access_token, data.admin_id);
+        console.log('Token:', loginStore.token);
+
+        const router = this.$router;
+        router.push('/main-menu');
+      } catch (error) {
+        console.error('There was an error!', error);
+        this.errorMessage = 'An unexpected error occurred. Please try again.';
+      }
+    }
+  }
 };
 </script>
+
+
+
+
+
 
 
 

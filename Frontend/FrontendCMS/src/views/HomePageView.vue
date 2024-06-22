@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="custom-container">
       <Banner />
       <SpeakerBanner />
       <StageBanner />
