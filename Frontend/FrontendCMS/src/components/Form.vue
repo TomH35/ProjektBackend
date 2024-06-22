@@ -1,38 +1,63 @@
 <template>
-  <form>
+  <form @submit.prevent="logIn">
     <div class="mb-3">
       <label for="loginInput" class="form-label">Login</label>
       <input v-model="email" type="text" class="form-control" id="loginInput" placeholder="Zadajte login">
     </div>
     <div class="mb-3">
       <label for="passwordInput" class="form-label">Heslo</label>
-      <input v-model="password" type="password" class="form-control" id="passwordInput" placeholder="Zadajte heslo">
+      <div class="input-group">
+        <input :type="showPassword ? 'text' : 'password'" v-model="password" class="form-control" id="passwordInput" placeholder="Zadajte heslo">
+        <button type="button" class="btn btn-outline-secondary" @click="togglePasswordVisibility">
+          {{ showPassword ? 'Hide' : 'Show' }}
+        </button>
+      </div>
     </div>
-    <button @click.prevent="logIn" class="btn custom-button-color">Login</button>
+    <div v-if="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+    <button type="submit" class="btn custom-button-color">Login</button>
     <router-link to="/admin-registration" class="ms-3">
-      <button class="btn custom-button-color">Register</button>
+      <button type="button" class="btn custom-button-color">Register</button>
     </router-link>
   </form>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
-  setup(_, { emit }) {
-    const email = ref('');
-    const password = ref('');
-
-    const logIn = () => {
-      emit('logIn', email.value, password.value);
-    };
-
+export default {
+  props: {
+    errorMessage: {
+      type: String,
+      default: ''
+    }
+  },
+  data() {
     return {
-      email,
-      password,
-      logIn,
+      email: '',
+      password: '',
+      showPassword: false
     };
   },
-});
+  methods: {
+    logIn() {
+      this.$emit('logIn', this.email, this.password);
+    },
+    togglePasswordVisibility() {
+      this.showPassword = !this.showPassword;
+    }
+  },
+  watch: {
+    errorMessage(newVal) {
+      if (newVal) {
+        console.log('Error message:', newVal);
+      }
+    }
+  }
+};
 </script>
+
+
+
+
+
 
