@@ -14,6 +14,10 @@ import AboutUsCreate from '@/components/AboutUsCreate.vue'
 import AboutUsEdit from '@/components/AboutUsEdit.vue'
 import HomePageView from '@/views/HomePageView.vue'
 import RegisteredUsers from '@/components/RegisteredUsers.vue'
+import SpeakersView from '@/views/SpeakersView.vue'
+import SponsorView from '@/views/SponsorView.vue'
+import StageView from '@/views/StageView.vue'
+import ContactView from '@/views/ContactView.vue'
 import { useLoginStore } from '../stores/loginStore'
 
 const router = createRouter({
@@ -118,7 +122,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/',
+      path: '/home',
       name: 'HomePageView',
       component: HomePageView,
     },

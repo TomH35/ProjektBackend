@@ -27,13 +27,12 @@ export default {
   data() {
     return {
       headerMenu: {
-        "DOMOV": "/",
+        "DOMOV": "/home",
         "SPEAKERS": "/speakers",
         "PROGRAM": "/program",
-        "PARTNERI": "/partners",
-        "KONTAKT": "/contact",
+        "PARTNERI": "/partneri",
+        "KONTAKT": "/kontakt",
         "REGISTRÁCIA": "/event-registration",
-        // ...other menu items...
       },
     };
   },
