@@ -13,5 +13,11 @@
     @endforeach
 </ul>
 <p>We look forward to seeing you at the events.</p>
+<p>If you wish to cancel your registration, please click the link below:</p>
+<p>
+    <a href="{{ $cancellationLink }}">
+        Cancel Registration
+    </a>
+</p>
 </body>
 </html>

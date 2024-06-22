@@ -2,7 +2,7 @@
     <div :style="bannerStyle" class="banner">
       <div class="container">
         <div class="banner-content">
-          <p class="banner-date">14 MAREC 2024, NITRA</p>
+          <p class="banner-date"></p>
           <h1 class="banner-title">TECH KONFERENCIA PRE ŠTUDENTOV V NITRE</h1>
           <h2 class="banner-subtitle">nCONNECT24</h2>
           <div class="banner-buttons">
