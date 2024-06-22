@@ -54,6 +54,8 @@ Route::post('/about_us/{id}', [AboutUsController::class, 'update']);
 Route::delete('/about_us/{id}', [AboutUsController::class, 'destroy']);
 Route::get('/Speakers', [StageController::class, 'getSpeakers']);
 Route::post('/register', [RegistrationController::class, 'store']);
+Route::get('cancel-registration', [RegistrationController::class, 'showCancelRegistrationForm']);
+Route::post('cancel-registration', [RegistrationController::class, 'cancelRegistration']);
 Route::get('registrations/{eventId}', [RegistrationController::class, 'getRegisteredUsers']);
 Route::get('/events', [StageController::class, 'getEvents']);
 Route::get('/EventsGroupedByTime', [StageController::class, 'getEventsGroupedByTime']);
