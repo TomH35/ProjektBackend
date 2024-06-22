@@ -18,6 +18,7 @@ import SpeakersView from '@/views/SpeakersView.vue'
 import SponsorView from '@/views/SponsorView.vue'
 import StageView from '@/views/StageView.vue'
 import ContactView from '@/views/ContactView.vue'
+import { useLoginStore } from '../stores/loginStore'
 
 
 
@@ -149,7 +150,14 @@ const router = createRouter({
     },
 
 
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({ left: 0, top: 0 })
+      }, 10)
+    })
+  }
 })
 
 export default router
