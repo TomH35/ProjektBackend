@@ -1,5 +1,5 @@
 <template>
-  <div class="container custom-container">
+  <div class="container another-custom-container">
     <div class="row">
       <div class="col-sm-6">
         <!-- Card 1 -->
@@ -95,7 +95,40 @@
       </div>
     </div>
     <div class="d-flex justify-content-center mt-3 mb-5">
-      <button @click="" class="btn custom-button-color">Logout</button>
+      <button @click="handleLogout" class="btn custom-button-color">Logout</button>
     </div>
   </div>
 </template>
+
+<script>
+import { useLoginStore } from '../stores/loginStore';
+import { useRouter } from 'vue-router';
+
+export default {
+  methods: {
+    handleLogout() {
+      const loginStore = useLoginStore();
+      const token = loginStore.getToken;
+
+      fetch('./laravel/public/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Authorization': `bearer ${token}`,
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          loginStore.clearToken();
+          const router = this.$router;
+          router.push('/admin-login');
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+  }
+};
+</script>
+
+

@@ -14,6 +14,7 @@ import AboutUsCreate from '@/components/AboutUsCreate.vue'
 import AboutUsEdit from '@/components/AboutUsEdit.vue'
 import HomePageView from '@/views/HomePageView.vue'
 import RegisteredUsers from '@/components/RegisteredUsers.vue'
+import { useLoginStore } from '../stores/loginStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,17 +27,26 @@ const router = createRouter({
     {
       path: '/stage-manager',
       name: 'StageManager',
-      component: StageManagerView
+      component: StageManagerView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/sponsor-manager',
       name: 'SponsorManager',
-      component: SponsorManagerView
+      component: SponsorManagerView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/editor',
       name: 'WebsiteCreateView',
-      component: WebsiteCreateView
+      component: WebsiteCreateView,
+      meta: {
+        requiresAuth: true
+      }
     },
 
     {
@@ -49,12 +59,18 @@ const router = createRouter({
     {
       path: '/galleries',
       name: 'GalleryManager',
-      component: GalleryManagerView
+      component: GalleryManagerView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/galleries/create',
       name: 'GalleryCreate',
-      component: GalleryCreate
+      component: GalleryCreate,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/galleries/:id',
@@ -65,29 +81,41 @@ const router = createRouter({
     {
       path: '/galleries/:id',
       name: 'GalleryDetail',
-      component: GalleryDetail,
+      component: GalleryDetail
     },
     {
       path: '/galleries/edit/:id',
       name: 'GalleryEdit',
       component: GalleryEditView,
-      props: true
+      props: true,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/about-us',
       name: 'AboutUsManager',
       component: AboutUsManagerView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/about-us/create',
       name: 'AboutUsCreate',
       component: AboutUsCreate,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/about-us/edit/:id',
       name: 'AboutUsEdit',
       component: AboutUsEdit,
       props: true,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/',
@@ -97,7 +125,10 @@ const router = createRouter({
     {
       path: '/main-menu',
       name: 'MainMenu',
-      component: () => import('../views/MainMenuView.vue')
+      component: () => import('../views/MainMenuView.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/admin-registration',
@@ -107,7 +138,10 @@ const router = createRouter({
     {
       path: '/speaker-manager',
       name: 'SpeakerManager',
-      component: () => import('../views/SpeakerManagerView.vue')
+      component: () => import('../views/SpeakerManagerView.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/event-registration',
@@ -121,7 +155,24 @@ const router = createRouter({
       component: RegisteredUsers
     },
 
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({ left: 0, top: 0 })
+      }, 10)
+    })
+  }
 })
+
+router.beforeEach((to, from, next) => {
+  const store = useLoginStore();
+  if (to.matched.some(record => record.meta.requiresAuth) && !store.userAuthorised) {
+    next({ name: 'home' });
+  } else {
+    next();
+  }
+});
+
 
 export default router

@@ -1,38 +1,44 @@
 <template>
-  <div class="container custom-container">
-    <div class="mb-5">
-      <h3><strong>Admin Registration</strong></h3>
-    </div>
-    <form @submit.prevent="registerAdmin">
-      <div class="mb-3">
-        <label for="meno" class="form-label">Meno</label>
-        <input type="text" class="form-control" id="meno" v-model="admin.meno" required>
-      </div>
-      <div class="mb-3">
-        <label for="priezvisko" class="form-label">Priezvisko</label>
-        <input type="text" class="form-control" id="priezvisko" v-model="admin.priezvisko" required>
-      </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" v-model="admin.email" required>
-      </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <div class="input-group">
-          <input :type="showPassword ? 'text' : 'password'" class="form-control" id="password" v-model="admin.password" required>
-          <button type="button" class="btn btn-outline-secondary" @click="togglePasswordVisibility">
-            {{ showPassword ? 'Hide' : 'Show' }}
-          </button>
+  <div class="container custom-container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-3 mb-5 bg-white rounded" style="width: 100%; max-width: 500px;">
+      <div class="card-body">
+        <div class="mb-4 text-center">
+          <h3><strong>Admin Registration</strong></h3>
         </div>
+        <form @submit.prevent="registerAdmin">
+          <div class="mb-3">
+            <label for="meno" class="form-label">Meno</label>
+            <input type="text" class="form-control" id="meno" v-model="admin.meno" required>
+          </div>
+          <div class="mb-3">
+            <label for="priezvisko" class="form-label">Priezvisko</label>
+            <input type="text" class="form-control" id="priezvisko" v-model="admin.priezvisko" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" v-model="admin.email" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-group">
+              <input :type="showPassword ? 'text' : 'password'" class="form-control" id="password" v-model="admin.password" required>
+              <button type="button" class="btn btn-outline-secondary" @click="togglePasswordVisibility">
+                {{ showPassword ? 'Hide' : 'Show' }}
+              </button>
+            </div>
+          </div>
+          <div v-if="errorMessage" class="alert alert-danger mt-3">
+            {{ errorMessage }}
+          </div>
+          <div v-if="successMessage" class="alert alert-success mt-3">
+            {{ successMessage }}
+          </div>
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+          </div>
+        </form>
       </div>
-      <div v-if="errorMessage" class="alert alert-danger">
-        {{ errorMessage }}
-      </div>
-      <div v-if="successMessage" class="alert alert-success">
-        {{ successMessage }}
-      </div>
-      <button type="submit" class="btn btn-primary">Register</button>
-    </form>
+    </div>
   </div>
 </template>
 

@@ -1,13 +1,13 @@
 <template>
   <form @submit.prevent="logIn">
     <div class="mb-3">
-      <label for="loginInput" class="form-label">Login</label>
-      <input v-model="email" type="text" class="form-control" id="loginInput" placeholder="Zadajte login">
+      <label for="loginInput" class="form-label">Email</label>
+      <input v-model="email" type="text" class="form-control" id="loginInput">
     </div>
     <div class="mb-3">
       <label for="passwordInput" class="form-label">Heslo</label>
       <div class="input-group">
-        <input :type="showPassword ? 'text' : 'password'" v-model="password" class="form-control" id="passwordInput" placeholder="Zadajte heslo">
+        <input :type="showPassword ? 'text' : 'password'" v-model="password" class="form-control" id="passwordInput">
         <button type="button" class="btn btn-outline-secondary" @click="togglePasswordVisibility">
           {{ showPassword ? 'Hide' : 'Show' }}
         </button>

@@ -32,27 +32,6 @@ export default {
     this.fetchEditorPosts();
   },
   methods: {
-    handleClick(page) {
-      if (page === 'Logout') {
-        const loginStore = useLoginStore();
-        const token = loginStore.getToken;
-
-        fetch('./laravel/public/api/auth/logout', {
-          method: 'POST',
-          headers: {
-            'Authorization': `bearer ${token}`,
-          },
-        })
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            loginStore.clearToken();
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-          });
-      }
-    },
     fetchEditorPosts() {
       fetch('../laravel/public/api/editorPost')
         .then(response => response.json())

@@ -13,6 +13,9 @@ export const useLoginStore = defineStore({
     getAdminId(state) {
       return state.admin_id;
     },
+    userAuthorised(state) {
+      return !!state.token; // Check if the token exists to determine if the user is authorized
+    },
   },
   actions: {
     setToken(token, admin_id) {

@@ -42,7 +42,7 @@
         this.$router.push('/speakers');
       },
       goToRegistration() {
-        this.$router.push('/registration');
+        this.$router.push('/event-registration');
       },
     },
   };
