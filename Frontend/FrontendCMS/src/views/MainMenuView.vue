@@ -1,5 +1,5 @@
 <template>
-  <div class="container another-custom-container">
+  <div class="container custom-container">
     <div class="row">
       <div class="col-sm-6">
         <!-- Card 1 -->
