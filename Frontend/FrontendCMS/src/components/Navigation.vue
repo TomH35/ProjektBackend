@@ -84,7 +84,7 @@ export default {
 
 <style scoped>
 .navbar {
-  background-color: #656E77; 
+  background-color: #191970; 
 }
 
 .custom-navbar-color {
