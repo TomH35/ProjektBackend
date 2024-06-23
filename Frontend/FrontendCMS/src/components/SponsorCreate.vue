@@ -179,7 +179,7 @@ export default {
       this.resetForm();
     },
     getImagePath(imagePath) {
-      return `./laravel/public${imagePath}`;
+      return `./laravel/public/${imagePath}`;
     },
     editSponsor(sponsor) {
       this.sponsor = { ...sponsor };

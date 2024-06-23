@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     getImagePath(imagePath) {
-      return `./laravel/public${imagePath}`;
+      return `./laravel/public/${imagePath}`;
     },
     fetchSponsors() {
       fetch('./laravel/public/api/SponsorRead', {
@@ -42,7 +42,9 @@ export default {
       });
     },
     redirectToLink(link) {
-      window.open(link, '_blank');
+      if (link) {
+        window.open(link, '_blank');
+      }
     }
   },
 };
@@ -111,3 +113,6 @@ export default {
   color: #666;
 }
 </style>
+
+
+

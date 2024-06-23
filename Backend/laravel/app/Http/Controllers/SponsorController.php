@@ -24,8 +24,8 @@ class SponsorController extends Controller
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
                 $path = Storage::putFile('public/images/sponsors', $file);
-                $url = Storage::url($path);
-                $sponsorData['image_path'] = $url;
+                $relativePath = str_replace('public/', 'storage/', $path);
+                $sponsorData['image_path'] = $relativePath;
             }
 
             $sponsor = Sponsor::create($sponsorData);
@@ -39,12 +39,13 @@ class SponsorController extends Controller
             return Response::json(['error' => 'An error occurred while creating the sponsor'], 500);
         }
     }
+
     public function deleteSponsor($id)
     {
         try {
             $sponsor = Sponsor::findOrFail($id);
             if ($sponsor->image_path) {
-                $imagePath = str_replace('/storage', 'public', $sponsor->image_path);
+                $imagePath = str_replace('storage/', 'public/', $sponsor->image_path);
                 Storage::delete($imagePath);
             }
             $sponsor->delete();
@@ -65,17 +66,15 @@ class SponsorController extends Controller
             $sponsor = Sponsor::findOrFail($id);
 
             if ($request->hasFile('image')) {
-    
                 if ($sponsor->image_path) {
-                    $imagePath = str_replace('/storage', 'public', $sponsor->image_path);
+                    $imagePath = str_replace('storage/', 'public/', $sponsor->image_path);
                     Storage::delete($imagePath);
                 }
 
-         
                 $file = $request->file('image');
                 $path = Storage::putFile('public/images/sponsors', $file);
-                $url = Storage::url($path);
-                $sponsorData['image_path'] = $url;
+                $relativePath = str_replace('public/', 'storage/', $path);
+                $sponsorData['image_path'] = $relativePath;
             }
 
             $sponsor->update($sponsorData);
@@ -89,11 +88,12 @@ class SponsorController extends Controller
             return Response::json(['error' => 'An error occurred while updating the sponsor'], 500);
         }
     }
+
     public function readSponsor()
     {
         $sponsors = Sponsor::all();
         return response()->json(['sponsors' => $sponsors]);
     }
-
-
 }
+
+
