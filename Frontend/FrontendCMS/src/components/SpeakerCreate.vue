@@ -112,8 +112,3 @@ export default {
   },
 };
 </script>
-
-
-
-
-  
