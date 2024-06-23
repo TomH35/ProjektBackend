@@ -22,7 +22,9 @@
                     <th>Name</th>
                     <th>Character Count</th>
                     <th>Image Count</th>
+                    <th>Location</th>
                     <th>Actions</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +32,8 @@
                     <td>{{ content.name }}</td>
                     <td>{{ getCharacterCount(content.content) }}</td>
                     <td>{{ getImageCount(content.content) }}</td>
+                    <td>{{ content.location }}</td>
+
                     <td>
                         <button @click="confirmDelete(content.id)" class="delete-button">Delete</button>
                     </td>

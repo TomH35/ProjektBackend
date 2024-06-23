@@ -1,7 +1,6 @@
 <template>
   <div class="content-container">
     <div v-if="editorPost">
-      <h2>{{ editorPost.name }}</h2>
       <div class="content-display" v-html="applyStyles(editorPost.content)"></div>
     </div>
   </div>
