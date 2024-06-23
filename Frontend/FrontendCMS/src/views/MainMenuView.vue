@@ -93,6 +93,24 @@
           </div>
         </div>
       </div>
+      <div class="col-sm-6">
+        <!-- Card 6 -->
+        <div class="card mb-5">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="/img/add-g273330623_1280.png" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Website editor</h5>
+                <router-link :to="{ name: 'WebsiteCreateView' }" class="nav-link">
+                  <span class="btn custom-button-color custom-button-margin">Otvoriť</span>
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="d-flex justify-content-center mt-3 mb-5">
       <button @click="handleLogout" class="btn custom-button-color">Logout</button>
