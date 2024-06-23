@@ -16,7 +16,7 @@
             <label for="existing-images" class="form-label">Existing Images:</label>
             <div v-if="gallery.images.length" class="mt-3">
               <div v-for="(image, index) in gallery.images" :key="index" class="img-preview">
-                <img :src="image.file_path" alt="Gallery Image" class="img-thumbnail mt-2" width="100" />
+                <img :src="getImagePath(image.file_path)" alt="Gallery Image" class="img-thumbnail mt-2" width="100" />
                 <button type="button" class="btn btn-danger btn-sm mt-2" @click="removeExistingImage(index)">Remove</button>
               </div>
             </div>
@@ -84,6 +84,11 @@ export default {
     },
     removeExistingImage(index) {
       this.gallery.images.splice(index, 1);
+    },
+    getImagePath(path) {
+      const formattedPath = `/laravel/storage/app/public/${path.replace('public/', '')}`;
+      console.log('Formatted image path:', formattedPath); // Log the formatted image path
+      return formattedPath;
     },
     async updateGallery() {
       try {

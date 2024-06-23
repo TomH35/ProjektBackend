@@ -9,7 +9,7 @@
       <div v-for="gallery in galleries" :key="gallery.id">
         <h2>{{ gallery.year }} - {{ gallery.category }}</h2>
         <div v-for="image in gallery.images" :key="image.id">
-          <img :src="image.file_path" alt="Gallery Image" width="200" />
+          <img :src="getImagePath(image.file_path)" alt="Gallery Image" width="200"/>
         </div>
         <button @click="editGallery(gallery.id)" class="btn btn-primary">Edit</button>
         <button @click="deleteGallery(gallery.id)" class="btn btn-danger">Delete</button>
@@ -32,12 +32,13 @@ export default {
   methods: {
     async fetchGalleries() {
       try {
-        const response = await fetch('http://localhost/laravel/public/api/galleriesRead');
+        const response = await fetch('/laravel/public/api/galleriesRead');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
         this.galleries = data;
+        console.log('Fetched galleries:', this.galleries); // Log the fetched galleries
       } catch (error) {
         this.errorMessage = 'Failed to load galleries';
         console.error('There was a problem with the fetch operation:', error);
@@ -49,7 +50,7 @@ export default {
     async deleteGallery(id) {
       if (confirm('Are you sure you want to delete this gallery?')) {
         try {
-          const response = await fetch(`http://localhost/laravel/public/api/galleriesDestroy/${id}`, {
+          const response = await fetch(`/laravel/public/api/galleriesDestroy/${id}`, {
             method: 'DELETE',
           });
           if (!response.ok) {
@@ -63,6 +64,21 @@ export default {
         }
       }
     },
+    getImagePath(path) {
+      const formattedPath = `./laravel/storage/app/public/${path.replace('public/', '')}`;
+      console.log('Formatted image path:', formattedPath); // Log the formatted image path
+      return formattedPath;
+    }
   },
 };
 </script>
+
+<style scoped>
+.custom-container {
+  margin-top: 20px;
+}
+</style>
+
+
+
+
