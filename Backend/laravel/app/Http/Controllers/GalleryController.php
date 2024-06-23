@@ -43,17 +43,24 @@ class GalleryController extends Controller
                 'category' => $category
             ]);
 
+            Log::info('Gallery created', ['gallery' => $gallery]);
+
             if ($request->hasFile('images')) {
+                Log::info('Images found in request', ['images' => $request->file('images')]);
                 foreach ($request->file('images') as $file) {
                     Log::info('Processing image', ['file' => $file]);
-                    $path = Storage::putFile('public/images/gallery', $file);
-                    $url = Storage::url($path);
+                    $path = $file->store('public/images/gallery');
+                    Log::info('Image stored', ['path' => $path]);
 
                     Image::create([
                         'gallery_id' => $gallery->id,
-                        'file_path' => $url
+                        'file_path' => $path // Store the relative path as in AboutUs
                     ]);
+
+                    Log::info('Image record created', ['gallery_id' => $gallery->id, 'file_path' => $path]);
                 }
+            } else {
+                Log::info('No images found in request');
             }
 
             DB::commit();
@@ -92,9 +99,8 @@ class GalleryController extends Controller
             // Handle new images
             if ($request->hasFile('new_images')) {
                 foreach ($request->file('new_images') as $newImage) {
-                    $path = $newImage->store('public/images');
-                    $url = Storage::url($path);
-                    $gallery->images()->create(['file_path' => $url]);
+                    $path = $newImage->store('public/images/gallery');
+                    $gallery->images()->create(['file_path' => $path]);
                 }
             }
 
@@ -106,10 +112,6 @@ class GalleryController extends Controller
             return response()->json(['error' => 'An error occurred while updating the gallery'], 500);
         }
     }
-
-
-
-
 
     public function destroy($id)
     {
@@ -128,5 +130,4 @@ class GalleryController extends Controller
             return response()->json(['error' => 'Gallery not found or server error'], 500);
         }
     }
-
 }

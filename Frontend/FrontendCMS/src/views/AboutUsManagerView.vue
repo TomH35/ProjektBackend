@@ -1,7 +1,7 @@
 <template>
     <div>
       <h1>About Us Manager</h1>
-      <router-link to="/about_us/create">Create New</router-link>
+      <router-link to="/about-us/create">Create New</router-link>
       <div v-if="aboutUs.length === 0">
         <p>No entries available.</p>
       </div>
@@ -30,7 +30,7 @@
     methods: {
       async fetchEntries() {
         try {
-          const response = await fetch('http://localhost/laravel/public/api/about_us');
+          const response = await fetch('../laravel/public/api/about_us');
           this.aboutUs = await response.json();
         } catch (error) {
           console.error('Failed to fetch entries:', error);
@@ -42,7 +42,7 @@
       async deleteEntry(id) {
         if (confirm('Are you sure you want to delete this entry?')) {
           try {
-            await fetch(`http://localhost/laravel/public/api/about_us/${id}`, {
+            await fetch(`../laravel/public/api/about_us/${id}`, {
               method: 'DELETE',
             });
             this.fetchEntries();
